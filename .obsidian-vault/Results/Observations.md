@@ -1,0 +1,18 @@
+#### 1. Compaction Overhead Ratio (COR) is Consistent Across Write-Intensive Workloads
+
+| Workload                | COR      | Interpretation                                               |
+| ----------------------- | -------- | ------------------------------------------------------------ |
+| Write-Heavy (80% write) | **1.62** | Every byte flushed triggers 1.62 bytes of compaction rewrite |
+| Mixed (50/50)           | **1.61** | Nearly identical write volume cause COR, not read ratio      |
+| Delete-Heavy            | **1.72** | Slightly higher tombstone merging adds overhead              |
+#### 2. Write Latency is Excellent, Read Latency Suffers Under Write Pressure
+| Metric    | Write-Heavy | Mixed    | After Deletes |
+| --------- | ----------- | -------- | ------------- |
+| Write P50 | 3.93 µs     | 3.91 µs  | 5.81 µs       |
+| Read P50  | 69.87 µs    | 68.33 µs | **2.02 µs**   |
+#### 3. Deletes Are Extremely Fast to Ingest, But Compaction Cleanup is the Bottleneck
+| Phase                 | Throughput    | Key Insight                             |
+| --------------------- | ------------- | --------------------------------------- |
+| Delete ingestion      | 542K ops/s    | Tombstones are small (no value payload) |
+| Read after deletes    | 1.3M ops/s    | Database is nearly empty                |
+| Obsolete keys dropped | 33.6M in 180s | Compaction actively cleans tombstones   |
