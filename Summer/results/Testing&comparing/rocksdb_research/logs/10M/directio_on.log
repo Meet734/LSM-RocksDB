@@ -1,0 +1,9 @@
+RocksDB:    version 11.6.0
+Date:       Mon Jul  6 02:53:55 2026
+CPU:        12 * Intel(R) Core(TM) i5-10505 CPU @ 3.20GHz
+CPUCache:   12288 KB
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000004.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000004.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000004.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000004.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000004.log: Input/output error

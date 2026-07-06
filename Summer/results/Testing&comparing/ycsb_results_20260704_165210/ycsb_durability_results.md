@@ -1,0 +1,3055 @@
+# YCSB Durability Suite Results
+# Started: 2026-07-04T16:52:10+00:00
+# ---
+
+## Phase: wal_on
+Timestamp: 2026-07-04T16:52:24+00:00
+Exit code: 0
+```
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmp0z04v9la'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.173 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.762 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.131 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.268 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.909 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.607 s
+[INFO] Finished at: 2026-07-04T16:52:18Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+[OVERALL], RunTime(ms), 60
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmpgnjkekq2'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.134 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.775 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.127 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.279 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.835 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.511 s
+[INFO] Finished at: 2026-07-04T16:52:23Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+Maximum execution time specified as: 1800 secs
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_on_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+Could not wait until max specified time, TerminatorThread interrupted.
+[OVERALL], RunTime(ms), 59
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+```
+
+## Phase: wal_off
+Timestamp: 2026-07-04T16:53:08+00:00
+Exit code: 0
+```
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmplx4hezkm'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.174 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.784 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.154 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.302 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.875 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.642 s
+[INFO] Finished at: 2026-07-04T16:53:02Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: disable_wal
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: disable_wal
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: disable_wal
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: disable_wal
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+[OVERALL], RunTime(ms), 61
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmphwq7q9es'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.119 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.814 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.135 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.276 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.849 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.569 s
+[INFO] Finished at: 2026-07-04T16:53:07Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+Maximum execution time specified as: 1800 secs
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_off_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: disable_wal
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: disable_wal
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: disable_wal
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: disable_wal
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+Could not wait until max specified time, TerminatorThread interrupted.
+[OVERALL], RunTime(ms), 60
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+```
+
+## Phase: wal_sync_1MB
+Timestamp: 2026-07-04T16:53:51+00:00
+Exit code: 0
+```
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmplqefc9y4'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.169 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.802 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.134 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.270 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.856 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.599 s
+[INFO] Finished at: 2026-07-04T16:53:45Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+[OVERALL], RunTime(ms), 59
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmp6k1erstw'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.168 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.781 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.172 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.271 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.848 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.602 s
+[INFO] Finished at: 2026-07-04T16:53:51Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+Maximum execution time specified as: 1800 secs
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_1MB_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+Could not wait until max specified time, TerminatorThread interrupted.
+[OVERALL], RunTime(ms), 59
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+```
+
+## Phase: wal_sync_8MB
+Timestamp: 2026-07-04T16:54:35+00:00
+Exit code: 0
+```
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmp6ksh1c7a'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.201 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.799 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.193 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.278 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.843 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.674 s
+[INFO] Finished at: 2026-07-04T16:54:29Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+[OVERALL], RunTime(ms), 61
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmp6s9qb4xq'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.170 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.771 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.131 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.278 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.881 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.585 s
+[INFO] Finished at: 2026-07-04T16:54:35Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+Maximum execution time specified as: 1800 secs
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/wal_sync_8MB_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+Could not wait until max specified time, TerminatorThread interrupted.
+[OVERALL], RunTime(ms), 64
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+```
+
+## Phase: manual_flush_on
+Timestamp: 2026-07-04T16:55:19+00:00
+Exit code: 0
+```
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmpvdpt_2we'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.137 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.845 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.148 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.271 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.978 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.741 s
+[INFO] Finished at: 2026-07-04T16:55:13Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+[OVERALL], RunTime(ms), 59
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmpygvju1tk'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.117 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.753 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.120 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.279 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.847 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.473 s
+[INFO] Finished at: 2026-07-04T16:55:19Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+Maximum execution time specified as: 1800 secs
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_on_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+Could not wait until max specified time, TerminatorThread interrupted.
+[OVERALL], RunTime(ms), 58
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+```
+
+## Phase: manual_flush_off
+Timestamp: 2026-07-04T16:56:03+00:00
+Exit code: 0
+```
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmpkqlxsbiw'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.152 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.808 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.132 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.277 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.894 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.623 s
+[INFO] Finished at: 2026-07-04T16:55:57Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+[OVERALL], RunTime(ms), 59
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmp552t0j5f'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.148 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.772 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.121 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.260 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.836 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.489 s
+[INFO] Finished at: 2026-07-04T16:56:03Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+Maximum execution time specified as: 1800 secs
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/manual_flush_off_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+Could not wait until max specified time, TerminatorThread interrupted.
+[OVERALL], RunTime(ms), 58
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+```
+
+## Phase: sync_per_write
+Timestamp: 2026-07-04T16:56:47+00:00
+Exit code: 0
+```
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmp31rb1uls'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.163 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.780 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.147 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.301 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.853 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.605 s
+[INFO] Finished at: 2026-07-04T16:56:41Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -load
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+[OVERALL], RunTime(ms), 60
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+[WARN]  Running against a source checkout. In order to get our runtime dependencies we'll have to invoke Maven. Depending on the state of your system, this may take ~30-45 seconds
+[DEBUG]  Running 'mvn -B -pl site.ycsb:rocksdb-binding -am package -DskipTests dependency:list -DoutputAbsoluteArtifactFilename -DappendOutput=false -DoutputFile=/tmp/tmpf_dzsdag'
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/opt/maven/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/opt/maven/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] YCSB Root                                                          [pom]
+[INFO] Core YCSB                                                          [jar]
+[INFO] Per Datastore Binding descriptor                                   [jar]
+[INFO] YCSB Datastore Binding Parent                                      [pom]
+[INFO] RocksDB Java Binding                                               [jar]
+[INFO] 
+[INFO] ---------------------------< site.ycsb:root >---------------------------
+[INFO] Building YCSB Root 0.18.0-SNAPSHOT                                 [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ root ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ root ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ root ---
+[INFO] 
+[INFO] ---------------------------< site.ycsb:core >---------------------------
+[INFO] Building Core YCSB 0.18.0-SNAPSHOT                                 [2/5]
+[INFO]   from core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ core ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 63 source files to /home/meet/ycsb/YCSB/core/target/classes
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Some input files use or override a deprecated API.
+[INFO] /home/meet/ycsb/YCSB/core/src/main/java/site/ycsb/DBFactory.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ core ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ core ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ core ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] --------------< site.ycsb:datastore-specific-descriptor >---------------
+[INFO] Building Per Datastore Binding descriptor 0.18.0-SNAPSHOT          [3/5]
+[INFO]   from binding-parent/datastore-specific-descriptor/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ datastore-specific-descriptor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ datastore-specific-descriptor ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/binding-parent/datastore-specific-descriptor/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ datastore-specific-descriptor ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ datastore-specific-descriptor ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ datastore-specific-descriptor ---
+[INFO] 
+[INFO] --- dependency:3.7.0:list (default-cli) @ datastore-specific-descriptor ---
+[INFO] Can't extract module name from htrace-core4-4.1.0-incubating.jar: Provider class com.fasterxml.jackson.core.JsonFactory not in JAR file htrace-core4-4.1.0-incubating.jar
+[INFO] 
+[INFO] ----------------------< site.ycsb:binding-parent >----------------------
+[INFO] Building YCSB Datastore Binding Parent 0.18.0-SNAPSHOT             [4/5]
+[INFO]   from binding-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ binding-parent ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ binding-parent ---
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ binding-parent ---
+[INFO] 
+[INFO] ---------------------< site.ycsb:rocksdb-binding >----------------------
+[INFO] Building RocksDB Java Binding 0.18.0-SNAPSHOT                      [5/5]
+[INFO]   from rocksdb/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.0.0-M1:enforce (enforce-maven) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- checkstyle:2.16:check (validate) @ rocksdb-binding ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rocksdb-binding ---
+[INFO] skip non existing resourceDirectory /home/meet/ycsb/YCSB/rocksdb/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.7.0:compile (default-compile) @ rocksdb-binding ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/meet/ycsb/YCSB/rocksdb/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rocksdb-binding ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.7.0:testCompile (default-testCompile) @ rocksdb-binding ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ rocksdb-binding ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ rocksdb-binding ---
+[INFO] Building jar: /home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- dependency:2.10:copy-dependencies (stage-dependencies) @ rocksdb-binding ---
+[INFO] org.slf4j:slf4j-api:jar:1.7.25 already exists in destination.
+[INFO] net.jcip:jcip-annotations:jar:1.0 already exists in destination.
+[INFO] org.slf4j:slf4j-simple:jar:1.7.25 already exists in destination.
+[INFO] org.rocksdb:rocksdbjni:jar:6.2.2 already exists in destination.
+[INFO] 
+[INFO] --- assembly:2.5.5:single (default) @ rocksdb-binding ---
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  '*:sources'
+
+[INFO] Building tar: /home/meet/ycsb/YCSB/rocksdb/target/ycsb-rocksdb-binding-0.18.0-SNAPSHOT.tar.gz
+[INFO] 
+[INFO] --- dependency:2.10:list (default-cli) @ rocksdb-binding ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for YCSB Root 0.18.0-SNAPSHOT:
+[INFO] 
+[INFO] YCSB Root .......................................... SUCCESS [  1.138 s]
+[INFO] Core YCSB .......................................... SUCCESS [  1.785 s]
+[INFO] Per Datastore Binding descriptor ................... SUCCESS [  0.157 s]
+[INFO] YCSB Datastore Binding Parent ...................... SUCCESS [  0.271 s]
+[INFO] RocksDB Java Binding ............................... SUCCESS [  0.834 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.546 s
+[INFO] Finished at: 2026-07-04T16:56:46Z
+[INFO] ------------------------------------------------------------------------
+java -cp /home/meet/ycsb/YCSB/rocksdb/conf:/home/meet/ycsb/YCSB/rocksdb/target/rocksdb-binding-0.18.0-SNAPSHOT.jar:/home/meet/.m2/repository/org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar:/home/meet/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/meet/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar:/home/meet/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4.jar:/home/meet/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar:/home/meet/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.4/jackson-core-asl-1.9.4.jar:/home/meet/ycsb/YCSB/core/target/core-0.18.0-SNAPSHOT.jar site.ycsb.Client -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+Command line: -db site.ycsb.db.rocksdb.RocksDBClient -P /home/meet/ycsb/YCSB/workloads/workloada -P /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write.properties -p rocksdb.optionsfile=/home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write_options.ini -p rocksdb.dir=/mnt/d/rocksdb_ycsb -p recordcount=10000000 -p operationcount=10000000 -p threadcount=1 -p maxexecutiontime=1800 -t
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+Maximum execution time specified as: 1800 secs
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /mnt/d/rocksdb_ycsb
+[Thread-1] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB options file: /home/meet/ycsb/YCSB/ycsb_results_20260704_165210/sync_per_write_options.ini
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.rocksdb.RocksDB in an unnamed module (file:/home/meet/.m2/repository/org/rocksdb/rocksdbjni/6.2.2/rocksdbjni-6.2.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+site.ycsb.DBException: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:80)
+	at site.ycsb.DBWrapper.init(DBWrapper.java:90)
+	at site.ycsb.ClientThread.run(ClientThread.java:91)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.rocksdb.RocksDBException: Unrecognized option DBOptions:: bloom_bits
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(Native Method)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:110)
+	at org.rocksdb.OptionsUtil.loadOptionsFromFile(OptionsUtil.java:91)
+	at site.ycsb.db.rocksdb.RocksDBClient.initRocksDBWithOptionsFile(RocksDBClient.java:105)
+	at site.ycsb.db.rocksdb.RocksDBClient.init(RocksDBClient.java:75)
+	... 3 more
+Could not wait until max specified time, TerminatorThread interrupted.
+[OVERALL], RunTime(ms), 62
+[OVERALL], Throughput(ops/sec), 0.0
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+```

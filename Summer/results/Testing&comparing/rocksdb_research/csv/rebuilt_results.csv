@@ -1,0 +1,2 @@
+scale,experiment_group,experiment_name,throughput_ops,db_size_mb,flush_count,flush_time_ms,compaction_count,compaction_time_ms,bytes_per_write,stall_micros,l0_files
+10M,compression,compression_none,5107,0,2572,3241311449,259306020,3832943257,8240.842480,21583793081,0

@@ -1,0 +1,58 @@
+RocksDB:    version 11.6.0
+Date:       Mon Jul  6 02:45:20 2026
+CPU:        12 * Intel(R) Core(TM) i5-10505 CPU @ 3.20GHz
+CPUCache:   12288 KB
+2026/07/06-02:46:21  ... thread 0: (70000,70000) ops and (1159.4,1159.4) ops/second in (60.374481,60.374481) seconds
+2026/07/06-02:46:21  ... thread 12: (70000,70000) ops and (1159.4,1159.4) ops/second in (60.377013,60.377013) seconds
+2026/07/06-02:46:21  ... thread 11: (70000,70000) ops and (1159.2,1159.2) ops/second in (60.385214,60.385214) seconds
+2026/07/06-02:46:21  ... thread 9: (70000,70000) ops and (1159.1,1159.1) ops/second in (60.391524,60.391524) seconds
+2026/07/06-02:46:21  ... thread 15: (70000,70000) ops and (1159.1,1159.1) ops/second in (60.392950,60.392950) seconds
+2026/07/06-02:46:21  ... thread 10: (70000,70000) ops and (1159.1,1159.1) ops/second in (60.393688,60.393688) seconds
+2026/07/06-02:46:21  ... thread 6: (70000,70000) ops and (1159.1,1159.1) ops/second in (60.392179,60.392179) seconds
+2026/07/06-02:46:21  ... thread 8: (70000,70000) ops and (1159.1,1159.1) ops/second in (60.393872,60.393872) seconds
+2026/07/06-02:46:21  ... thread 2: (70000,70000) ops and (1159.0,1159.0) ops/second in (60.395302,60.395302) seconds
+2026/07/06-02:46:21  ... thread 14: (70000,70000) ops and (1159.0,1159.0) ops/second in (60.396104,60.396104) seconds
+2026/07/06-02:46:21  ... thread 5: (70000,70000) ops and (1159.0,1159.0) ops/second in (60.399413,60.399413) seconds
+2026/07/06-02:46:21  ... thread 1: (70000,70000) ops and (1158.9,1158.9) ops/second in (60.399623,60.399623) seconds
+2026/07/06-02:46:21  ... thread 13: (70000,70000) ops and (1158.9,1158.9) ops/second in (60.401467,60.401467) seconds
+2026/07/06-02:46:21  ... thread 3: (70000,70000) ops and (1158.8,1158.8) ops/second in (60.405113,60.405113) seconds
+2026/07/06-02:46:21  ... thread 7: (70000,70000) ops and (1158.7,1158.7) ops/second in (60.409932,60.409932) seconds
+2026/07/06-02:46:21  ... thread 4: (70000,70000) ops and (1158.5,1158.5) ops/second in (60.422912,60.422912) seconds
+2026/07/06-02:47:21  ... thread 0: (61000,131000) ops and (1015.0,1087.4) ops/second in (60.098385,120.472866) seconds
+2026/07/06-02:47:21  ... thread 12: (61000,131000) ops and (1015.0,1087.4) ops/second in (60.097807,120.474820) seconds
+2026/07/06-02:47:21  ... thread 14: (61000,131000) ops and (1015.3,1087.3) ops/second in (60.081818,120.477922) seconds
+2026/07/06-02:47:21  ... thread 8: (61000,131000) ops and (1015.2,1087.3) ops/second in (60.086655,120.480527) seconds
+2026/07/06-02:47:21  ... thread 9: (61000,131000) ops and (1015.0,1087.2) ops/second in (60.096360,120.487884) seconds
+2026/07/06-02:47:21  ... thread 15: (61000,131000) ops and (1015.1,1087.2) ops/second in (60.095488,120.488438) seconds
+2026/07/06-02:47:21  ... thread 11: (61000,131000) ops and (1014.9,1087.2) ops/second in (60.102803,120.488017) seconds
+2026/07/06-02:47:21  ... thread 1: (61000,131000) ops and (1015.2,1087.2) ops/second in (60.089292,120.488915) seconds
+2026/07/06-02:47:21  ... thread 2: (61000,131000) ops and (1015.0,1087.2) ops/second in (60.097861,120.493163) seconds
+2026/07/06-02:47:21  ... thread 6: (61000,131000) ops and (1015.0,1087.2) ops/second in (60.099312,120.491491) seconds
+2026/07/06-02:47:21  ... thread 13: (61000,131000) ops and (1015.1,1087.2) ops/second in (60.093514,120.494981) seconds
+2026/07/06-02:47:21  ... thread 10: (61000,131000) ops and (1014.9,1087.1) ops/second in (60.106494,120.500182) seconds
+2026/07/06-02:47:21  ... thread 5: (61000,131000) ops and (1014.9,1087.1) ops/second in (60.103428,120.502841) seconds
+2026/07/06-02:47:21  ... thread 3: (61000,131000) ops and (1015.0,1087.1) ops/second in (60.098364,120.503477) seconds
+2026/07/06-02:47:21  ... thread 7: (61000,131000) ops and (1015.0,1087.1) ops/second in (60.099071,120.509003) seconds
+2026/07/06-02:47:21  ... thread 4: (61000,131000) ops and (1014.9,1086.9) ops/second in (60.102835,120.525747) seconds
+2026/07/06-02:48:22  ... thread 0: (64000,195000) ops and (1052.4,1075.6) ops/second in (60.815422,181.288288) seconds
+2026/07/06-02:48:22  ... thread 9: (64000,195000) ops and (1052.6,1075.6) ops/second in (60.802250,181.290134) seconds
+2026/07/06-02:48:22  ... thread 1: (64000,195000) ops and (1052.6,1075.6) ops/second in (60.803756,181.292671) seconds
+2026/07/06-02:48:22  ... thread 14: (64000,195000) ops and (1052.2,1075.5) ops/second in (60.824977,181.302899) seconds
+2026/07/06-02:48:22  ... thread 8: (64000,195000) ops and (1052.2,1075.5) ops/second in (60.823432,181.303959) seconds
+2026/07/06-02:48:22  ... thread 12: (64000,195000) ops and (1052.1,1075.5) ops/second in (60.830819,181.305639) seconds
+2026/07/06-02:48:22  ... thread 2: (64000,195000) ops and (1052.4,1075.5) ops/second in (60.814023,181.307186) seconds
+2026/07/06-02:48:22  ... thread 15: (64000,195000) ops and (1052.2,1075.5) ops/second in (60.822577,181.311015) seconds
+2026/07/06-02:48:22  ... thread 11: (64000,195000) ops and (1052.2,1075.5) ops/second in (60.827009,181.315026) seconds
+2026/07/06-02:48:22  ... thread 10: (64000,195000) ops and (1052.3,1075.5) ops/second in (60.818093,181.318275) seconds
+2026/07/06-02:48:22  ... thread 13: (64000,195000) ops and (1052.2,1075.4) ops/second in (60.824752,181.319733) seconds
+2026/07/06-02:48:22  ... thread 5: (64000,195000) ops and (1052.3,1075.4) ops/second in (60.819802,181.322643) seconds
+2026/07/06-02:48:22  ... thread 6: (64000,195000) ops and (1052.1,1075.4) ops/second in (60.830863,181.322354) seconds
+2026/07/06-02:48:22  ... thread 3: (64000,195000) ops and (1052.0,1075.3) ops/second in (60.838061,181.341538) seconds
+2026/07/06-02:48:22  ... thread 7: (64000,195000) ops and (1052.0,1075.3) ops/second in (60.838421,181.347424) seconds
+2026/07/06-02:48:22  ... thread 4: (64000,195000) ops and (1052.2,1075.3) ops/second in (60.827173,181.352920) seconds
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000132.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000132.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000132.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000132.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000132.log: Input/output error
+put error: IO error: While appending to file: /mnt/d/rocksdb_research/db/000132.log: Input/output error
