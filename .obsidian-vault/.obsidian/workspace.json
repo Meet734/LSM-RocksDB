@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Benchmark/Comparison.md",
+                "file": "decisions/Overview.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Comparison"
+              "title": "Overview"
             }
           }
         ]
@@ -185,13 +185,20 @@
   },
   "active": "19725f66811899be",
   "lastOpenFiles": [
+    "decisions/Background jobs.md",
+    "decisions/Overview.md",
+    "decisions/Direct IO.md",
+    "decisions/Compression in RocksDB.md",
+    "decisions/Compaction.md",
+    "decisions/Cache size.md",
+    "decisions/(Memtable) Write_Buffer_size.md",
+    "Benchmark/Comparison.md",
     "Benchmark/db_bench results.md",
     "Benchmark/db_bench tool.md",
     "Benchmark/YCSB.md",
     "Benchmark/YCSB results.md",
     "Notes/Scripts.md",
     "Notes/Tuning Parameters.md",
-    "Benchmark/Comparison.md",
     "Benchmark/Untitled.md",
     "Draft/Untitled.md",
     "Benchmark",
