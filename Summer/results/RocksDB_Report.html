@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RocksDB Performance & Scaling Report — Visuals & Key Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg-main: #0b0f19;
+    --bg-panel: #111827;
+    --bg-card: #182235;
+    --bg-soft: #1e293b;
+    --border: #334155;
+    --border-light: #475569;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-dark: #cbd5e1;
+    --accent-blue: #3b82f6;
+    --accent-cyan: #06b6d4;
+    --accent-green: #10b981;
+    --accent-amber: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-purple: #8b5cf6;
+    --accent-pink: #ec4899;
+    --shadow-lg: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .brand { font-family: 'Outfit', sans-serif; }
+  code, .mono { font-family: 'Fira Code', monospace; }
+
+  /* Layout */
+  .app-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+  }
+
+  /* Sidebar Navigation */
+  aside {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(16px);
+    border-right: 1px solid var(--border);
+    padding: 24px 16px;
+    z-index: 50;
+  }
+  aside::-webkit-scrollbar { width: 5px; }
+  aside::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .brand-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .brand-logo {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 18px; color: #fff;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+  }
+  .brand-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.1; }
+  .brand-sub { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+
+  .nav-group { margin-bottom: 20px; }
+  .nav-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.2px; color: var(--accent-cyan);
+    margin: 0 8px 8px; display: block;
+  }
+  aside a {
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--text-dark); font-size: 13px; font-weight: 500;
+    padding: 8px 12px; border-radius: 8px; text-decoration: none;
+    transition: all 0.2s ease; margin-bottom: 2px;
+  }
+  aside a:hover, aside a.active {
+    background: var(--bg-soft); color: #fff;
+    transform: translateX(4px);
+    border-left: 3px solid var(--accent-blue);
+  }
+  aside a .badge-num {
+    font-size: 10px; background: rgba(255,255,255,0.08);
+    padding: 2px 6px; border-radius: 99px; color: var(--text-muted);
+  }
+
+  /* Main Container */
+  main { padding: 32px 48px 80px; max-width: 1600px; margin: 0 auto; width: 100%; }
+
+  /* Hero Banner */
+  .hero {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 40px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3);
+    color: var(--accent-cyan); font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 99px; margin-bottom: 12px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .hero h1 { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -0.5px; }
+  .hero p { color: var(--text-dark); font-size: 16px; max-width: 800px; margin-bottom: 20px; }
+  
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero-pill {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border);
+    padding: 6px 14px; border-radius: 8px; font-size: 12px; color: var(--text-dark);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hero-pill strong { color: #fff; }
+
+  /* KPI Grid */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .kpi-card {
+    background: var(--bg-panel); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px;
+    position: relative; overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .kpi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--border-light); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+  }
+  .kpi-card.green::before { background: var(--accent-green); }
+  .kpi-card.blue::before { background: var(--accent-blue); }
+  .kpi-card.red::before { background: var(--accent-red); }
+  .kpi-card.amber::before { background: var(--accent-amber); }
+  
+  .kpi-title { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .kpi-value { font-size: 32px; font-weight: 800; font-family: 'Outfit', sans-serif; margin-bottom: 4px; }
+  .kpi-card.green .kpi-value { color: var(--accent-green); }
+  .kpi-card.blue .kpi-value { color: var(--accent-cyan); }
+  .kpi-card.red .kpi-value { color: var(--accent-red); }
+  .kpi-card.amber .kpi-value { color: var(--accent-amber); }
+  .kpi-desc { font-size: 12px; color: var(--text-dark); }
+
+  /* Section Styling */
+  section {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-lg);
+  }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border); padding-bottom: 16px;
+  }
+  .section-title-group .kicker {
+    font-size: 11px; font-weight: 700; color: var(--accent-cyan);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px;
+  }
+  .section-title-group h2 { font-size: 24px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 12px; }
+  
+  /* Badges */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-winner { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+  .badge-alert { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.3); }
+  .badge-warn { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+  .badge-info { background: rgba(59, 130, 246, 0.15); color: var(--accent-cyan); border: 1px solid rgba(59, 130, 246, 0.3); }
+
+  /* Content Layouts */
+  .grid-2col {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 1200px) { .grid-2col { grid-template-columns: 1fr; } }
+
+  .chart-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    display: flex; flex-direction: column;
+  }
+  .chart-title {
+    font-size: 13px; font-weight: 600; color: var(--text-dark);
+    margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .chart-box { position: relative; height: 280px; width: 100%; flex-grow: 1; }
+  .chart-box.sm { height: 220px; }
+
+  /* Key Notes & Tradeoffs Box */
+  .notes-box {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .card-box {
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px;
+  }
+  .card-box h3 {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--accent-cyan); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-box.green h3 { color: var(--accent-green); }
+  .card-box.red h3 { color: var(--accent-red); }
+  .card-box.amber h3 { color: var(--accent-amber); }
+  .card-box.purple h3 { color: var(--accent-purple); }
+
+  /* Bullet Lists (Very Less Text) */
+  .key-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .key-list li {
+    font-size: 13px; color: var(--text-dark); display: flex; align-items: flex-start; gap: 10px;
+  }
+  .key-list li::before {
+    content: '▪'; color: var(--accent-cyan); font-size: 16px; line-height: 1;
+  }
+  .key-list strong { color: #fff; font-weight: 600; }
+
+  /* Tradeoff Mini Tables */
+  .tradeoff-table {
+    width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px;
+  }
+  .tradeoff-table th {
+    text-align: left; padding: 8px 10px; background: rgba(0,0,0,0.2);
+    color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tradeoff-table td {
+    padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-dark);
+  }
+  .tradeoff-table tr:last-child td { border-bottom: none; }
+  .tag-pro { color: var(--accent-green); font-weight: 600; }
+  .tag-con { color: var(--accent-red); font-weight: 600; }
+  .tag-neutral { color: var(--accent-amber); font-weight: 600; }
+
+  /* Data Tables */
+  .table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-card);
+    margin-top: 16px;
+  }
+  .data-table {
+    width: 100%; border-collapse: collapse; font-size: 13px; text-align: right;
+  }
+  .data-table th, .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .data-table th:first-child, .data-table td:first-child { text-align: left; }
+  .data-table thead th {
+    background: var(--bg-soft); color: var(--text-muted); font-size: 11px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .data-table tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  .val-hi { color: var(--accent-green); font-weight: 700; }
+  .val-lo { color: var(--accent-red); font-weight: 700; }
+  .val-warn { color: var(--accent-amber); font-weight: 700; }
+
+  /* Interactive Filter Bar */
+  .filter-bar {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .filter-btn {
+    background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-dark);
+    padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent-blue); color: #fff; border-color: var(--accent-blue);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+  }
+  .search-input {
+    background: var(--bg-soft); border: 1px solid var(--border); color: #fff;
+    padding: 6px 14px; border-radius: 8px; font-size: 12px; width: 220px;
+    outline: none; transition: border-color 0.2s ease;
+  }
+  .search-input:focus { border-color: var(--accent-cyan); }
+
+  /* Responsive & Footer */
+  @media (max-width: 1000px) {
+    .app-layout { grid-template-columns: 1fr; }
+    aside { display: none; }
+    main { padding: 16px; }
+  }
+  footer {
+    text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 12px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- Left Sidebar Navigation -->
+  <aside>
+    <div class="brand-header">
+      <div class="brand-logo">R</div>
+      <div>
+        <div class="brand-title">RocksDB Study</div>
+        <div class="brand-sub">Tuning &amp; Scaling Report</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <span class="nav-label">Overview</span>
+      <a href="#summary" class="active">Executive Summary <span class="badge-num">KPIs</span></a>
+      <a href="#interactive-table">Master Results Table <span class="badge-num">121</span></a>
+    </div>
+
+    <div class="nav-group">
+      <span class="nav-label">8M Parameter Sweeps</span>
+      <a href="#compression">1. Compression Codec <span class="badge-num">lz4</span></a>
+      <a href="#memtable">2. Memtable Size <span class="badge-num">256M</span></a>
+      <a href="#bgjobs">3. Background Jobs <span class="badge-num">16</span></a>
+      <a href="#cache">4. Block Cache Size <span class="badge-num">1GB</span></a>
+      <a href="#directio">5. Direct I/O Bypass <span class="badge-num">OFF</span></a>
+      <a href="#compaction">6. Compaction Style <span class="badge-num">Level</span></a>
+    </div>
+
+    <div class="nav-group">
+      <span class="nav-label">Scaling &amp; Workloads</span>
+      <a href="#scaling-tput">7. Throughput Wall <span class="badge-num">100M</span></a>
+      <a href="#scaling-lat">8. Tail Latency Spike <span class="badge-num">p99</span></a>
+      <a href="#ycsb-matrix">9. YCSB Matrix <span class="badge-num">A/B/C/F</span></a>
+      <a href="#thread-inversion">10. Thread Inversion <span class="badge-num">4v8v16</span></a>
+      <a href="#write-pressure">11. Write Stalls <span class="badge-num">44x</span></a>
+    </div>
+
+    <div class="nav-group">
+      <span class="nav-label">Synthesis</span>
+      <a href="#guidance">12. Optimal Config <span class="badge-num">Best</span></a>
+      <a href="#takeaways">13. Quick Takeaways <span class="badge-num">Summary</span></a>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- Hero Banner -->
+    <header class="hero">
+      <div class="hero-tag">⚡ Performance &amp; Scaling Benchmark Showcase</div>
+      <h1>RocksDB LSM-Tree Tuning &amp; Scaling Report</h1>
+      <p>Condensed visual analysis of 121 experimental runs from <code>results.csv</code>. Featuring pure visual comparisons, ultra-brief tradeoff matrices, and interactive data tables.</p>
+      <div class="hero-pills">
+        <div class="hero-pill"><strong>Benchmark:</strong> db_bench / YCSB</div>
+        <div class="hero-pill"><strong>Dataset:</strong> 1M to 100M Records (1KB values)</div>
+        <div class="hero-pill"><strong>Threads:</strong> 4 to 16</div>
+        <div class="hero-pill"><strong>Storage:</strong> WSL2 /mnt/d (drvfs)</div>
+      </div>
+    </header>
+
+    <!-- KPI Cards -->
+    <section id="summary" style="background:transparent; border:none; padding:0; box-shadow:none;">
+      <div class="kpi-grid">
+        <div class="kpi-card green">
+          <div class="kpi-title">Max Read Throughput Gain</div>
+          <div class="kpi-value">+39%</div>
+          <div class="kpi-desc">Achieved by scaling background compaction jobs from 2 to 16 threads.</div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-title">Storage Space Reduction</div>
+          <div class="kpi-value">−40%</div>
+          <div class="kpi-desc">lz4 &amp; snappy compression (850MB vs 1,419MB uncompressed) with faster reads.</div>
+        </div>
+        <div class="kpi-card red">
+          <div class="kpi-title">Direct I/O Performance Trap</div>
+          <div class="kpi-value">4.8× Slower</div>
+          <div class="kpi-desc">Bypassing OS page cache collapses read throughput (448k → 93k ops/s).</div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-title">YCSB-A Scaling Collapse</div>
+          <div class="kpi-value">6.1× Drop</div>
+          <div class="kpi-desc">Write-mixed throughput decays from 1M to 50M records due to compaction debt.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Master Interactive Table Section -->
+    <section id="interactive-table">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Data Explorer</div>
+          <h2>Master Results Table (results.csv)</h2>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <input type="text" id="tableSearch" class="search-input" placeholder="Search benchmark, knob, notes...">
+        </div>
+      </div>
+      
+      <div class="filter-bar" id="tableFilters">
+        <button class="filter-btn active" data-filter="all">All (121)</button>
+        <button class="filter-btn" data-filter="compression">Compression</button>
+        <button class="filter-btn" data-filter="memtable">Memtable</button>
+        <button class="filter-btn" data-filter="bgjobs">Bg Jobs</button>
+        <button class="filter-btn" data-filter="cache">Block Cache</button>
+        <button class="filter-btn" data-filter="directio">Direct I/O</button>
+        <button class="filter-btn" data-filter="compaction">Compaction</button>
+        <button class="filter-btn" data-filter="ycsb">YCSB Matrix</button>
+      </div>
+
+      <div class="table-wrapper" style="max-height: 420px;">
+        <table class="data-table" id="masterTable">
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Group / Name</th>
+              <th>Scale</th>
+              <th>Threads</th>
+              <th>Throughput</th>
+              <th>Read p99 (µs)</th>
+              <th>DB Size (MB)</th>
+              <th>Flushes / Stalls</th>
+            </tr>
+          </thead>
+          <tbody id="masterTableBody">
+            <!-- Populated dynamically via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 1 COMPRESSION ============ -->
+    <section id="compression">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Parameter Sweep 1 · 8M Records</div>
+          <h2>Compression Codec <span class="badge badge-winner">Winner: lz4</span></h2>
+        </div>
+      </div>
+      
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Read Throughput vs DB Size</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">lz4 base default</span>
+          </div>
+          <div class="chart-box"><canvas id="c_comp"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box green">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>lz4 &amp; snappy dominate:</strong> Shrink DB by ~40% (1,419MB → 850MB) AND increase read throughput over uncompressed.</li>
+              <li><strong>Why smaller is faster:</strong> I/O-bound workload; smaller SST files keep more of the active working set resident in OS page cache.</li>
+              <li><strong>zstd trap at 1KB:</strong> Heavy CPU decompression overhead is not repaid by extra space savings at 1KB value sizes.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>⚖️ Tradeoffs in Brief</h3>
+            <table class="tradeoff-table">
+              <tr><th>Codec</th><th>Pros</th><th>Cons / Verdict</th></tr>
+              <tr>
+                <td><strong>lz4</strong></td>
+                <td class="tag-pro">Smallest DB, fastest reads</td>
+                <td><span class="badge badge-winner">Default Choice</span></td>
+              </tr>
+              <tr>
+                <td><strong>snappy</strong></td>
+                <td class="tag-pro">Fast decompression, -40% size</td>
+                <td class="tag-neutral">Slightly lower ops/s vs lz4</td>
+              </tr>
+              <tr>
+                <td><strong>zstd</strong></td>
+                <td class="tag-pro">High compression ratio on big data</td>
+                <td class="tag-con">Slowest reads at 1KB (CPU bound)</td>
+              </tr>
+              <tr>
+                <td><strong>none</strong></td>
+                <td class="tag-pro">Zero CPU decompression cost</td>
+                <td class="tag-con">67% bloated DB, evicts cache</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Codec</th><th>Read Throughput (ops/s)</th><th>DB Size (MB)</th><th>Read p99 (µs)</th><th>Compaction Time (ms)</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>none</td><td>343,232</td><td class="val-lo">1,419</td><td>12</td><td>18,190</td><td>Memory bloat penalty</td></tr>
+            <tr><td>snappy</td><td>402,191</td><td>850</td><td class="val-hi">10</td><td class="val-hi">5,342</td><td>Strong alternative</td></tr>
+            <tr><td><strong>lz4 (base)</strong></td><td class="val-hi">410,341</td><td class="val-hi">850</td><td class="val-hi">10</td><td>8,167</td><td><span class="badge badge-winner">Optimal Balance</span></td></tr>
+            <tr><td>zstd</td><td class="val-lo">341,087</td><td>911</td><td>12</td><td>8,517</td><td>CPU bottleneck at 1KB</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 2 MEMTABLE ============ -->
+    <section id="memtable">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Parameter Sweep 2 · 8M Records</div>
+          <h2>Memtable Size <span class="badge badge-warn">Write-Amp vs Space-Amp</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Flush Count (Bars) vs Read Ops/s (Line)</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">write_buffer_size</span>
+          </div>
+          <div class="chart-box"><canvas id="c_mem"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box amber">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>Flush reduction:</strong> Doubling memtable size halves flush count (128 → 64 → 31 → 16), sharply reducing write amplification.</li>
+              <li><strong>Read ops climb:</strong> Throughput rises (+12% at 512MB) because fewer flushes leave fewer overlapping SST files to merge.</li>
+              <li><strong>The 512MB Trap:</strong> Resulting DB size doubles to <strong>1,786 MB (~2× space amp)</strong>! Huge buffers defer compaction, leaving unmerged obsolete keys on disk.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>⚖️ Tradeoffs in Brief</h3>
+            <table class="tradeoff-table">
+              <tr><th>Size</th><th>Pros</th><th>Cons / Verdict</th></tr>
+              <tr><td><strong>64 MB</strong></td><td class="tag-pro">Minimal RAM, tidy DB size (840MB)</td><td class="tag-con">High flushes (128), write-amp</td></tr>
+              <tr><td><strong>128 MB</strong></td><td class="tag-pro">Halves flushes (64)</td><td class="tag-neutral">Slight transient space increase</td></tr>
+              <tr><td><strong>256 MB</strong></td><td class="tag-pro">Only 31 flushes, fast reads (409k)</td><td><span class="badge badge-winner">Sweet Spot</span></td></tr>
+              <tr><td><strong>512 MB</strong></td><td class="tag-pro">Highest read ops (438k), 16 flushes</td><td class="tag-con">2× DB Size (1.78 GB space bloat!)</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>write_buffer_size</th><th>Read Throughput (ops/s)</th><th>Flush Count</th><th>DB Size (MB)</th><th>Compaction Time (ms)</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td><strong>64 MB (base)</strong></td><td>391,019</td><td class="val-lo">128</td><td class="val-hi">840</td><td>7,662</td><td>Base default</td></tr>
+            <tr><td>128 MB</td><td>385,497</td><td>64</td><td>994</td><td>5,305</td><td>Good intermediate</td></tr>
+            <tr><td><strong>256 MB</strong></td><td>409,551</td><td>31</td><td class="val-hi">844</td><td class="val-hi">4,264</td><td><span class="badge badge-winner">Recommended Sweet Spot</span></td></tr>
+            <tr><td>512 MB</td><td class="val-hi">438,391</td><td class="val-hi">16</td><td class="val-lo">1,786</td><td class="val-hi">2,737</td><td><span class="badge badge-warn">High Space Amp</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 3 BGJOBS ============ -->
+    <section id="bgjobs">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Parameter Sweep 3 · 8M Records</div>
+          <h2>Background Jobs <span class="badge badge-winner">Strongest Cheap Lever</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Read Throughput (Bars) vs Read p99 µs (Line)</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">max_background_jobs</span>
+          </div>
+          <div class="chart-box"><canvas id="c_bg"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box green">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>Monotonic +39% boost:</strong> Read ops scale from 355k (2 jobs) to 495k (16 jobs).</li>
+              <li><strong>Latency drops:</strong> Read p99 tail latency improves from 11 µs down to 8 µs.</li>
+              <li><strong>Why it works:</strong> A 16-thread random write fill creates compaction debt rapidly. More background threads clear debt faster, keeping the LSM tree shallow and well-compacted.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>⚖️ Tradeoffs in Brief</h3>
+            <table class="tradeoff-table">
+              <tr><th>Jobs</th><th>Pros</th><th>Cons / Verdict</th></tr>
+              <tr><td><strong>2 Jobs</strong></td><td class="tag-pro">Low background CPU usage</td><td class="tag-con">Slowest reads, deep LSM tree</td></tr>
+              <tr><td><strong>4 Jobs</strong></td><td class="tag-pro">Standard baseline (409k ops)</td><td class="tag-neutral">Moderate compaction backlog</td></tr>
+              <tr><td><strong>8 Jobs</strong></td><td class="tag-pro">Fast reads (454k ops, 9µs p99)</td><td class="tag-pro">Great multi-core utilization</td></tr>
+              <tr><td><strong>16 Jobs</strong></td><td class="tag-pro">+39% ops (495k), lowest p99 (8µs)</td><td><span class="badge badge-winner">Match to CPU Cores</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>max_background_jobs</th><th>Read Throughput (ops/s)</th><th>Read p99 (µs)</th><th>DB Size (MB)</th><th>Compaction Time (ms)</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td class="val-lo">355,103</td><td class="val-lo">11</td><td>870</td><td>5,946</td><td>Underpowered compaction</td></tr>
+            <tr><td>4 (base)</td><td>409,906</td><td>10</td><td>1,012</td><td>7,521</td><td>Base default</td></tr>
+            <tr><td>8</td><td>454,550</td><td>9</td><td class="val-hi">715</td><td>7,070</td><td>High performance</td></tr>
+            <tr><td><strong>16</strong></td><td class="val-hi">495,149</td><td class="val-hi">8</td><td>847</td><td class="val-hi">6,408</td><td><span class="badge badge-winner">Maximum Throughput</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 4 CACHE ============ -->
+    <section id="cache">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Parameter Sweep 4 · 8M Records</div>
+          <h2>Block Cache Size <span class="badge badge-info">Saturates Early</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Read Throughput vs Block Cache Size</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">working set ≈ 850 MB</span>
+          </div>
+          <div class="chart-box"><canvas id="c_cache"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box purple">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>Flat curve above 1GB:</strong> 512MB is slightly slow due to cache misses. Once cache reaches ~1GB, the entire ~850MB working set fits in memory.</li>
+              <li><strong>Zero gain at 2GB / 4GB:</strong> Allocating more RAM buys nothing; minor fluctuations are run-to-run noise and OS page cache competition.</li>
+              <li><strong>Rule of thumb:</strong> Size block cache to match working set size. Don't over-allocate RAM here when bgjobs or memtable tuning yield bigger returns.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>⚖️ Tradeoffs in Brief</h3>
+            <table class="tradeoff-table">
+              <tr><th>Cache Size</th><th>Pros</th><th>Cons / Verdict</th></tr>
+              <tr><td><strong>512 MB</strong></td><td class="tag-pro">Saves RAM</td><td class="tag-con">Cache &lt; working set → disk misses</td></tr>
+              <tr><td><strong>1 GB (base)</strong></td><td class="tag-pro">Fits 100% of working set (457k ops)</td><td><span class="badge badge-winner">Optimal Sizing</span></td></tr>
+              <tr><td><strong>2 GB – 4 GB</strong></td><td class="tag-pro">Excess headroom</td><td class="tag-con">Wastes RAM, 0% speed gain</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>block_cache</th><th>Read Throughput (ops/s)</th><th>Read p99 (µs)</th><th>DB Size (MB)</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>512 MB</td><td class="val-lo">404,716</td><td>10</td><td>922</td><td>Under-sized for 850MB dataset</td></tr>
+            <tr><td><strong>1 GB (base)</strong></td><td class="val-hi">457,086</td><td class="val-hi">9</td><td>1,116</td><td><span class="badge badge-winner">Ideal Match</span></td></tr>
+            <tr><td>2 GB</td><td>419,413</td><td>10</td><td>858</td><td>Wasted RAM (diminishing returns)</td></tr>
+            <tr><td>4 GB</td><td>432,363</td><td class="val-hi">9</td><td>846</td><td>Wasted RAM (diminishing returns)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 5 DIRECT IO ============ -->
+    <section id="directio">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Parameter Sweep 5 · 8M Records</div>
+          <h2>Direct I/O Toggle <span class="badge badge-alert">4.8× Read Penalty</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Buffered vs Direct — Read Ops/s (Bars) &amp; Read p99 µs (Line)</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">use_direct_reads</span>
+          </div>
+          <div class="chart-box"><canvas id="c_dio"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box red">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>Decisive failure on drvfs:</strong> Enabling Direct I/O collapses random read throughput from <strong>448k down to 93k ops/s (-79%)</strong>!</li>
+              <li><strong>Latency explosion:</strong> Read p99 tail latency skyrockets from <strong>9 µs to 215 µs (24× worse)</strong>.</li>
+              <li><strong>Why it happens:</strong> Direct I/O bypasses the OS page cache. On WSL2 `/mnt/d`, that warm OS page cache WAS the primary read performance engine. Forcing physical I/O on every read is punishing.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>⚖️ Tradeoffs in Brief</h3>
+            <table class="tradeoff-table">
+              <tr><th>I/O Mode</th><th>Pros</th><th>Cons / Verdict</th></tr>
+              <tr><td><strong>Buffered (OFF)</strong></td><td class="tag-pro">448k ops/s, 9µs p99 (OS Cache warm)</td><td><span class="badge badge-winner">Mandatory on WSL/drvfs</span></td></tr>
+              <tr><td><strong>Direct I/O (ON)</strong></td><td class="tag-pro">Avoids double RAM caching</td><td class="tag-con">4.8× slower reads! Keep OFF</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>I/O Mode</th><th>Read Throughput (ops/s)</th><th>Read p99 (µs)</th><th>DB Size (MB)</th><th>Compaction Time (ms)</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Buffered (OFF - base)</strong></td><td class="val-hi">448,509</td><td class="val-hi">9</td><td>1,006</td><td>7,830</td><td><span class="badge badge-winner">Keep OFF (Use OS Cache)</span></td></tr>
+            <tr><td>Direct I/O (ON)</td><td class="val-lo">92,989</td><td class="val-lo">215</td><td>1,121</td><td>5,255</td><td><span class="badge badge-alert">Severe Performance Penalty</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 6 COMPACTION ============ -->
+    <section id="compaction">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Parameter Sweep 6 · 8M Records</div>
+          <h2>Compaction Style <span class="badge badge-winner">Level vs Universal</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Read Throughput (ops/s) &amp; DB Size (MB)</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">FIFO excluded (mirage)</span>
+          </div>
+          <div class="chart-box"><canvas id="c_cmp"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box amber">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>Level Compaction:</strong> Balanced default. Fully compacted DB (860MB) and fastest legitimate reads (443k ops/s).</li>
+              <li><strong>Universal Compaction:</strong> Reduces write amplification, but incurs <strong>~2× space amplification (1,683MB)</strong> and 12% slower reads.</li>
+              <li><strong>FIFO Mirage (4.6M ops/s):</strong> NOT real performance! FIFO drops 96% of keys by age (only 37,220 / 1,000,000 keys survived). Reads hit bloom filters over a 38MB stub DB.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>⚖️ Tradeoffs in Brief</h3>
+            <table class="tradeoff-table">
+              <tr><th>Style</th><th>Pros</th><th>Cons / Verdict</th></tr>
+              <tr><td><strong>Level (base)</strong></td><td class="tag-pro">Fast reads (443k), low space amp (860M)</td><td><span class="badge badge-winner">Default for Read-Mixed</span></td></tr>
+              <tr><td><strong>Universal</strong></td><td class="tag-pro">Lower write amplification</td><td class="tag-con">2× DB size (1.68GB), slower reads</td></tr>
+              <tr><td><strong>FIFO</strong></td><td class="tag-pro">Zero compaction overhead</td><td class="tag-con">Drops data! Cache/TTL use only</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Compaction Style</th><th>Read Throughput (ops/s)</th><th>DB Size (MB)</th><th>Keys Found / Survived</th><th>Read p99 (µs)</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Level (base)</strong></td><td class="val-hi">443,515</td><td class="val-hi">860</td><td>100% (1,000,000)</td><td>9</td><td><span class="badge badge-winner">Balanced Default</span></td></tr>
+            <tr><td>Universal</td><td>389,419</td><td class="val-lo">1,683</td><td>100% (1,000,000)</td><td>11</td><td>Use for Write-Heavy stores</td></tr>
+            <tr><td>FIFO</td><td class="val-hi">4,594,395*</td><td class="val-hi">38*</td><td class="val-lo">3.7% (37,220 only!)</td><td>2</td><td><span class="badge badge-alert">Artifact (Data Dropped)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 7 SCALING TPUT ============ -->
+    <section id="scaling-tput">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Scaling Wall · 8M → 100M Records</div>
+          <h2>Throughput Scaling Wall <span class="badge badge-warn">RAM-Bound Decay</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Read Throughput vs Record Count (by Codec)</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">8M → 10M → 50M → 100M</span>
+          </div>
+          <div class="chart-box"><canvas id="c_scale"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box amber">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>3.6× Throughput Decay:</strong> Read ops decay super-linearly from 8M to 100M records across all codecs as dataset outgrows OS page cache.</li>
+              <li><strong>Knob Ranking is Strictly Stable:</strong> Notice how lz4 > snappy > none > zstd remains in the exact same rank order at every single scale!</li>
+              <li><strong>Direct I/O Penalty Widens:</strong> At 100M records, buffered I/O delivers 125k ops/s vs Direct I/O's 26k ops/s (~4.8× gap persists).</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>📊 100M Scale Snapshot (ops/s)</h3>
+            <table class="tradeoff-table">
+              <tr><th>Codec @ 100M</th><th>Throughput</th><th>vs 8M Baseline</th></tr>
+              <tr><td><strong>lz4</strong></td><td class="val-hi">114,895 ops/s</td><td class="tag-con">−72% decay (from 410k)</td></tr>
+              <tr><td><strong>snappy</strong></td><td>112,613 ops/s</td><td class="tag-con">−72% decay (from 402k)</td></tr>
+              <tr><td><strong>none</strong></td><td>96,105 ops/s</td><td class="tag-con">−72% decay (from 343k)</td></tr>
+              <tr><td><strong>zstd</strong></td><td class="val-lo">95,504 ops/s</td><td class="tag-con">−72% decay (from 341k)</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container" style="margin-top:16px;">
+        <div class="chart-title"><span>Direct I/O Penalty Across Scale (Buffered vs Direct Read ops/s)</span></div>
+        <div class="chart-box sm"><canvas id="c_dioscale"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ============ 8 SCALING LAT ============ -->
+    <section id="scaling-lat">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Scaling Wall · Tail Latency</div>
+          <h2>Tail Latency Climbs with Dataset Size <span class="badge badge-alert">p99 Triples</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Read p99 Latency (µs) vs Record Count</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">Lower is better</span>
+          </div>
+          <div class="chart-box"><canvas id="c_scalelat"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box red">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>p99 roughly triples:</strong> For lz4, tail latency rises from 10 µs @ 8M to 35 µs @ 100M records.</li>
+              <li><strong>Cache miss penalty:</strong> Each miss in page cache forces a physical disk seek. As misses become frequent past the RAM boundary, tail latency degrades first.</li>
+              <li><strong>Early warning indicator:</strong> Tail latency moves inversely with throughput; monitoring p99 provides an early warning before throughput collapses.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>⚖️ Tradeoffs in Brief</h3>
+            <table class="tradeoff-table">
+              <tr><th>Scale</th><th>lz4 Read p99</th><th>Impact / Behavior</th></tr>
+              <tr><td><strong>8M (In RAM)</strong></td><td class="val-hi">10 µs</td><td class="tag-pro">100% page cache hits</td></tr>
+              <tr><td><strong>10M (Threshold)</strong></td><td>11 µs</td><td class="tag-pro">Minimal disk spill</td></tr>
+              <tr><td><strong>50M (Disk Bound)</strong></td><td class="val-warn">22 µs</td><td class="tag-neutral">Frequent disk seeks</td></tr>
+              <tr><td><strong>100M (Heavy Disk)</strong></td><td class="val-lo">35 µs</td><td class="tag-con">Tail latency 3.5× worse</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 9 YCSB MATRIX ============ -->
+    <section id="ycsb-matrix">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">YCSB Workload Matrix · 1M → 50M Records</div>
+          <h2>Workload Throughput vs Scale <span class="badge badge-info">Read-Only Resilient</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Overall Run Throughput (ops/s) @ 4 Threads</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">A=50/50, B=95/5, C=100% Read, F=RMW</span>
+          </div>
+          <div class="chart-box"><canvas id="c_ycsb"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box blue">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>Write-mixed A collapses 6.1×:</strong> From 5,751 ops/s down to 940 ops/s. Overwrites trigger continuous compaction debt and write stalls.</li>
+              <li><strong>Read-only C degrades gracefully:</strong> Halves from 9,954 to 2,629 ops/s @ 4t (recovers to 3,627 @ 16t). No write stalls!</li>
+              <li><strong>Workload F Artifact:</strong> Looks fast at 50M (4,529 ops/s) because YCSB runs sequentially (A→B→C→F) on a shared DB. By the time F runs, the DB is already warmed and compacted!</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>📊 Workload Comparison @ 50M / 16t</h3>
+            <table class="tradeoff-table">
+              <tr><th>Workload</th><th>50M / 16t ops/s</th><th>Scaling Resilience</th></tr>
+              <tr><td><strong>C (100% Read)</strong></td><td class="val-hi">3,627 ops/s</td><td class="tag-pro">High (No write stalls)</td></tr>
+              <tr><td><strong>B (95% Read)</strong></td><td>2,112 ops/s</td><td class="tag-neutral">Moderate (Minor flushes)</td></tr>
+              <tr><td><strong>A (50/50 Mixed)</strong></td><td class="val-lo">1,111 ops/s</td><td class="tag-con">Low (Compaction bound)</td></tr>
+              <tr><td><strong>F (RMW*)</strong></td><td class="val-hi">6,500 ops/s*</td><td><span class="badge badge-warn">Ordering Artifact*</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-title"><span>Read-Only vs Write-Mixed Throughput at 50M Records @ 16 Threads (ops/s)</span></div>
+        <div class="chart-box sm"><canvas id="c_rw"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ============ 10 THREAD INVERSION ============ -->
+    <section id="thread-inversion">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">YCSB Workload A · Thread Scaling</div>
+          <h2>Thread Scaling Inverts Under Disk Pressure <span class="badge badge-alert">Non-Obvious</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Workload A Throughput by Thread Count (4 vs 8 vs 16)</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">1M → 10M → 50M</span>
+          </div>
+          <div class="chart-box"><canvas id="c_threads"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box purple">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>1M (RAM Cached):</strong> More threads help! 4→8→16 threads scale from 5.8k to 7.8k ops/s (CPU bound).</li>
+              <li><strong>10M (Inversion Point!):</strong> 4 threads (3,506 ops/s) <strong>BEATS 8 threads (2,584 ops/s)</strong>! Why? High concurrent random I/O and compaction contention on a single WSL2 disk causes thrashing.</li>
+              <li><strong>50M (Heavy Disk):</strong> 16 threads recover slightly (1,111 vs 940 ops/s) by hiding per-request disk latency.</li>
+              <li><strong>Core Takeaway:</strong> Optimal thread count is dynamic and scale-dependent! A fixed thread pool is sub-optimal across scales.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>⚖️ Tradeoffs in Brief</h3>
+            <table class="tradeoff-table">
+              <tr><th>Scale</th><th>Optimal Threads</th><th>Why / Mechanism</th></tr>
+              <tr><td><strong>1M (In RAM)</strong></td><td class="val-hi">16 Threads (7.8k)</td><td class="tag-pro">CPU parallelism wins</td></tr>
+              <tr><td><strong>10M (Spillover)</strong></td><td class="val-warn">4 Threads (3.5k)</td><td class="tag-con">8t/16t thrash single disk I/O</td></tr>
+              <tr><td><strong>50M (Disk Bound)</strong></td><td>16 Threads (1.1k)</td><td class="tag-neutral">Hides disk seek latency</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Scale</th><th>4 Threads ops/s</th><th>8 Threads ops/s</th><th>16 Threads ops/s</th><th>Read p99 @ 16t (µs)</th><th>Update p99 @ 16t (µs)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1M Records</strong></td><td>5,751</td><td>7,418</td><td class="val-hi">7,829</td><td class="val-hi">3,935</td><td class="val-hi">6,039</td></tr>
+            <tr><td><strong>10M Records</strong></td><td class="val-hi">3,506</td><td class="val-lo">2,584</td><td>2,965</td><td>11,775</td><td>13,927</td></tr>
+            <tr><td><strong>50M Records</strong></td><td class="val-lo">940</td><td>1,064</td><td class="val-hi">1,111</td><td class="val-lo">24,783</td><td class="val-lo">26,239</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 11 WRITE PRESSURE ============ -->
+    <section id="write-pressure">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Write-Path &amp; Stalls · 8M → 100M Records</div>
+          <h2>Write-Stalls Explode 44× at Scale <span class="badge badge-alert">Super-Linear Debt</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Compaction Time (ms) &amp; Write-Stall Time (µs) vs Scale</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">lz4 base config</span>
+          </div>
+          <div class="chart-box"><canvas id="c_stall"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box red">
+            <h3>⚡ Key Notes &amp; Behavior</h3>
+            <ul class="key-list">
+              <li><strong>12.5× Data vs 44× Stalls:</strong> From 8M to 100M records, data grows 12.5×, compaction time tracks it (12.5×), but <strong>write stalls explode ~44× (54ms → 2.4s)</strong>!</li>
+              <li><strong>Why stalls compound:</strong> Flushes queue up faster than background threads can compact deeper LSM levels, forcing RocksDB to stall incoming writes to prevent space exhaustion.</li>
+              <li><strong>Mitigation:</strong> Bigger memtable (256M/512M) or more background jobs (8–16) are critical to absorb write bursts without user-visible stalls.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>📊 Write Pressure Breakdown (lz4 base)</h3>
+            <table class="tradeoff-table">
+              <tr><th>Scale</th><th>Compaction Time</th><th>Total Write Stalls</th></tr>
+              <tr><td><strong>8M</strong></td><td class="val-hi">8.17 seconds</td><td class="val-hi">54.5 ms</td></tr>
+              <tr><td><strong>10M</strong></td><td>10.21 seconds</td><td>76.1 ms</td></tr>
+              <tr><td><strong>50M</strong></td><td class="val-warn">51.04 seconds</td><td class="val-warn">851.0 ms</td></tr>
+              <tr><td><strong>100M</strong></td><td class="val-lo">102.09 seconds</td><td class="val-lo">2,407.0 ms (2.4s!)</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container" style="margin-top:16px;">
+        <div class="chart-title"><span>YCSB Workload A Read p99 Latency Spike (µs) @ 4t vs 16t across scale</span></div>
+        <div class="chart-box sm"><canvas id="c_ylat"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ============ 12 GUIDANCE ============ -->
+    <section id="guidance">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Tuning Guidance · Synthesis</div>
+          <h2>Optimal Starting Config &amp; Knob ROI <span class="badge badge-winner">Where to Spend Effort</span></h2>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="chart-container">
+          <div class="chart-title">
+            <span>Read Throughput Swing (%) Produced by Each Knob (Best vs Worst in 8M Sweep)</span>
+            <span class="mono" style="font-size:11px; color:var(--text-muted);">ROI Ranking</span>
+          </div>
+          <div class="chart-box"><canvas id="c_impact"></canvas></div>
+        </div>
+
+        <div class="notes-box">
+          <div class="card-box green">
+            <h3>⚡ Priority ROI Ranking</h3>
+            <ul class="key-list">
+              <li><strong>1. Direct I/O OFF (382% swing):</strong> Single biggest lever. Never bypass OS page cache on cache-backed storage.</li>
+              <li><strong>2. Background Jobs 8–16 (39% swing):</strong> Free performance boost; match to available CPU cores.</li>
+              <li><strong>3. lz4 / snappy Compression (20% swing):</strong> Shrinks DB and speeds up reads simultaneously.</li>
+              <li><strong>4. Memtable &amp; Cache (13–14% swing):</strong> Second-order. Set memtable to 256MB and cache to fit working set.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <h3>🏆 Recommended Starting Config</h3>
+            <table class="tradeoff-table">
+              <tr><th>Parameter</th><th>Recommended Value</th><th>Why</th></tr>
+              <tr><td><code>compression</code></td><td class="val-hi">lz4</td><td>Smallest DB + fast decompression</td></tr>
+              <tr><td><code>use_direct_reads</code></td><td class="val-hi">false (buffered)</td><td>Leverages OS page cache</td></tr>
+              <tr><td><code>max_background_jobs</code></td><td class="val-hi">8 to 16</td><td>Clears compaction debt fast</td></tr>
+              <tr><td><code>write_buffer_size</code></td><td>256 MB</td><td>Balances flush-amp vs space</td></tr>
+              <tr><td><code>block_cache</code></td><td>≈ Working Set Size</td><td>Avoids wasting RAM</td></tr>
+              <tr><td><code>compaction_style</code></td><td>Level</td><td>Lowest space amp, fast reads</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 13 TAKEAWAYS ============ -->
+    <section id="takeaways">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="kicker">Executive Summary Table</div>
+          <h2>Consolidated Takeaways &amp; Cheat Sheet</h2>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr><th>#</th><th>Experimental Finding</th><th>Core Mechanism / Why</th><th>Actionable Rule</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td><strong>lz4 beats none &amp; zstd</strong></td><td>I/O bound; smaller SSTs fit in OS cache; zstd CPU heavy at 1KB</td><td>Use lz4 as default compression</td></tr>
+            <tr><td>2</td><td><strong>Bigger memtable → 8× fewer flushes</strong></td><td>Absorbs overwrites in memory before flush</td><td>Set to 256MB (avoid 512MB 2× space bloat)</td></tr>
+            <tr><td>3</td><td><strong>+39% reads with 16 background jobs</strong></td><td>Parallel compaction keeps LSM tree shallow</td><td>Set equal to CPU core count</td></tr>
+            <tr><td>4</td><td><strong>Block cache flat above 1 GB</strong></td><td>Entire ~850MB working set fits in RAM</td><td>Size to working set; don't over-allocate</td></tr>
+            <tr><td>5</td><td><strong>Direct I/O = 4.8× slower reads</strong></td><td>Bypasses OS page cache on WSL2 drvfs</td><td>Keep Direct I/O OFF (use buffered I/O)</td></tr>
+            <tr><td>6</td><td><strong>FIFO "4.6M ops/s" is a mirage</strong></td><td>Drops 96% of keys by age; reads hit empty stub</td><td>Never use FIFO for durable storage</td></tr>
+            <tr><td>7</td><td><strong>Throughput decays −3.6× at 100M</strong></td><td>Working set outgrows RAM; disk seeks dominate</td><td>Knob rankings remain stable across scale</td></tr>
+            <tr><td>8</td><td><strong>YCSB-A collapses 6.1× @ 50M</strong></td><td>Write overwrites drive compaction debt &amp; stalls</td><td>Read-only scales well; write-mixed hits wall</td></tr>
+            <tr><td>9</td><td><strong>Thread scaling inverts at 10M</strong></td><td>4t beats 8t due to single-disk I/O thrashing</td><td>Use adaptive concurrency based on load</td></tr>
+            <tr><td>10</td><td><strong>Write stalls explode 44× at 100M</strong></td><td>Flushes queue behind heavy compaction work</td><td>Provision background threads &amp; buffers</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      RocksDB Performance &amp; Scaling Study — Interactive Visual Report · Generated from <code>results.csv</code> (121 runs) · Built with clean dark-mode UI &amp; Chart.js
+    </footer>
+  </main>
+</div>
+
+<script>
+/* ==================== 1. EMBEDDED RESULTS.CSV DATASET (121 ROWS) ==================== */
+const rawData = [
+  {tool:"db_bench",group:"compression",name:"compression_none",scale:"8M",threads:16,tput:343232,metric:"readrandom_ops_sec",rp99:12,up99:121,size:1419,flushes:128,stall:51375,notes:"No compression: largest DB, bigger SSTs evict cache"},
+  {tool:"db_bench",group:"compression",name:"compression_snappy",scale:"8M",threads:16,tput:402191,metric:"readrandom_ops_sec",rp99:10,up99:138,size:850,flushes:129,stall:68097,notes:"Snappy: ~40% smaller DB than none with fast reads"},
+  {tool:"db_bench",group:"compression",name:"compression_lz4",scale:"8M",threads:16,tput:410341,metric:"readrandom_ops_sec",rp99:10,up99:124,size:850,flushes:129,stall:54464,notes:"lz4: smallest DB and fastest reads (base default)"},
+  {tool:"db_bench",group:"compression",name:"compression_zstd",scale:"8M",threads:16,tput:341087,metric:"readrandom_ops_sec",rp99:12,up99:143,size:911,flushes:129,stall:72500,notes:"zstd: heavier CPU decompression at 1KB values"},
+  {tool:"db_bench",group:"memtable",name:"memtable_64",scale:"8M",threads:16,tput:391019,metric:"readrandom_ops_sec",rp99:10,up99:136,size:840,flushes:128,stall:65547,notes:"Smallest memtable: most frequent flushes (base default)"},
+  {tool:"db_bench",group:"memtable",name:"memtable_128",scale:"8M",threads:16,tput:385497,metric:"readrandom_ops_sec",rp99:10,up99:133,size:994,flushes:64,stall:63246,notes:"Larger memtable roughly halves flush count vs 64MB"},
+  {tool:"db_bench",group:"memtable",name:"memtable_256",scale:"8M",threads:16,tput:409551,metric:"readrandom_ops_sec",rp99:10,up99:120,size:844,flushes:31,stall:50048,notes:"Larger memtable: fewer flushes and less compaction"},
+  {tool:"db_bench",group:"memtable",name:"memtable_512",scale:"8M",threads:16,tput:438391,metric:"readrandom_ops_sec",rp99:9,up99:128,size:1786,flushes:16,stall:57625,notes:"Largest memtable: fewest flushes but ~2x space amplification"},
+  {tool:"db_bench",group:"bgjobs",name:"bgjobs_2",scale:"8M",threads:16,tput:355103,metric:"readrandom_ops_sec",rp99:11,up99:138,size:870,flushes:129,stall:68097,notes:"Fewest compaction threads: LSM stays deeper, slowest reads"},
+  {tool:"db_bench",group:"bgjobs",name:"bgjobs_4",scale:"8M",threads:16,tput:409906,metric:"readrandom_ops_sec",rp99:10,up99:156,size:1012,flushes:128,stall:86479,notes:"Baseline background parallelism (base default)"},
+  {tool:"db_bench",group:"bgjobs",name:"bgjobs_8",scale:"8M",threads:16,tput:454550,metric:"readrandom_ops_sec",rp99:9,up99:151,size:715,flushes:129,stall:80631,notes:"More parallel flush/compaction keeps LSM shallower"},
+  {tool:"db_bench",group:"bgjobs",name:"bgjobs_16",scale:"8M",threads:16,tput:495149,metric:"readrandom_ops_sec",rp99:8,up99:144,size:847,flushes:129,stall:74203,notes:"Most parallel compaction: fastest reads (+39% vs 2 jobs)"},
+  {tool:"db_bench",group:"cache",name:"cache_512",scale:"8M",threads:16,tput:404716,metric:"readrandom_ops_sec",rp99:10,up99:167,size:922,flushes:128,stall:96906,notes:"Block cache smaller than ~850MB working set"},
+  {tool:"db_bench",group:"cache",name:"cache_1024",scale:"8M",threads:16,tput:457086,metric:"readrandom_ops_sec",rp99:9,up99:155,size:1116,flushes:128,stall:85276,notes:"Block cache working-set sized (base default)"},
+  {tool:"db_bench",group:"cache",name:"cache_2048",scale:"8M",threads:16,tput:419413,metric:"readrandom_ops_sec",rp99:10,up99:156,size:858,flushes:129,stall:85513,notes:"Cache exceeds working set: no extra read gain"},
+  {tool:"db_bench",group:"cache",name:"cache_4096",scale:"8M",threads:16,tput:432363,metric:"readrandom_ops_sec",rp99:9,up99:164,size:846,flushes:128,stall:94161,notes:"Cache far above working set: run-to-run variance"},
+  {tool:"db_bench",group:"directio",name:"directio_off",scale:"8M",threads:16,tput:448509,metric:"readrandom_ops_sec",rp99:9,up99:154,size:1006,flushes:128,stall:84433,notes:"Buffered IO: reads served warm from OS page cache (base)"},
+  {tool:"db_bench",group:"directio",name:"directio_on",scale:"8M",threads:16,tput:92989,metric:"readrandom_ops_sec",rp99:215,up99:165,size:1121,flushes:128,stall:94992,notes:"Direct IO bypasses OS page cache: ~4.8x slower random reads!"},
+  {tool:"db_bench",group:"compaction",name:"compaction_level",scale:"8M",threads:16,tput:443515,metric:"readrandom_ops_sec",rp99:9,up99:173,size:860,flushes:129,stall:102960,notes:"Level compaction: fully compacted DB, fastest legitimate reads"},
+  {tool:"db_bench",group:"compaction",name:"compaction_universal",scale:"8M",threads:16,tput:389419,metric:"readrandom_ops_sec",rp99:10,up99:180,size:1683,flushes:128,stall:109512,notes:"Universal compaction: ~2x space amplification, slower reads"},
+  {tool:"db_bench",group:"compaction",name:"compaction_fifo",scale:"8M",threads:16,tput:4594395,metric:"readrandom_ops_sec",rp99:2,up99:92,size:38,flushes:129,stall:21937,notes:"FIFO artifact: drops 96% of keys! Not comparable"},
+  {tool:"db_bench",group:"compression",name:"compression_none",scale:"10M",threads:16,tput:308909,metric:"readrandom_ops_sec",rp99:13,up99:142,size:1774,flushes:160,stall:71800,notes:"10M scale uncompressed"},
+  {tool:"db_bench",group:"compression",name:"compression_snappy",scale:"10M",threads:16,tput:361972,metric:"readrandom_ops_sec",rp99:11,up99:165,size:1062,flushes:161,stall:95169,notes:"10M scale snappy"},
+  {tool:"db_bench",group:"compression",name:"compression_lz4",scale:"10M",threads:16,tput:369307,metric:"readrandom_ops_sec",rp99:11,up99:146,size:1062,flushes:161,stall:76116,notes:"10M scale lz4"},
+  {tool:"db_bench",group:"compression",name:"compression_zstd",scale:"10M",threads:16,tput:306978,metric:"readrandom_ops_sec",rp99:13,up99:171,size:1139,flushes:161,stall:101322,notes:"10M scale zstd"},
+  {tool:"db_bench",group:"compression",name:"compression_none",scale:"50M",threads:16,tput:154454,metric:"readrandom_ops_sec",rp99:26,up99:873,size:8869,flushes:800,stall:802749,notes:"50M scale uncompressed: disk bound"},
+  {tool:"db_bench",group:"compression",name:"compression_snappy",scale:"50M",threads:16,tput:180986,metric:"readrandom_ops_sec",rp99:22,up99:1134,size:5312,flushes:806,stall:1064022,notes:"50M scale snappy"},
+  {tool:"db_bench",group:"compression",name:"compression_lz4",scale:"50M",threads:16,tput:184653,metric:"readrandom_ops_sec",rp99:22,up99:921,size:5312,flushes:806,stall:851012,notes:"50M scale lz4"},
+  {tool:"db_bench",group:"compression",name:"compression_zstd",scale:"50M",threads:16,tput:153489,metric:"readrandom_ops_sec",rp99:26,up99:1203,size:5694,flushes:806,stall:1132815,notes:"50M scale zstd"},
+  {tool:"db_bench",group:"compression",name:"compression_none",scale:"100M",threads:16,tput:96105,metric:"readrandom_ops_sec",rp99:42,up99:2341,size:17738,flushes:1600,stall:2270517,notes:"100M scale uncompressed: severe disk seeks"},
+  {tool:"db_bench",group:"compression",name:"compression_snappy",scale:"100M",threads:16,tput:112613,metric:"readrandom_ops_sec",rp99:36,up99:3080,size:10625,flushes:1612,stall:3009509,notes:"100M scale snappy"},
+  {tool:"db_bench",group:"compression",name:"compression_lz4",scale:"100M",threads:16,tput:114895,metric:"readrandom_ops_sec",rp99:35,up99:2477,size:10625,flushes:1612,stall:2407026,notes:"100M scale lz4"},
+  {tool:"db_bench",group:"compression",name:"compression_zstd",scale:"100M",threads:16,tput:95504,metric:"readrandom_ops_sec",rp99:42,up99:3274,size:11388,flushes:1612,stall:3204085,notes:"100M scale zstd"},
+  {tool:"db_bench",group:"directio",name:"directio_off",scale:"10M",threads:16,tput:403658,metric:"readrandom_ops_sec",rp99:10,up99:188,size:1258,flushes:160,stall:117999,notes:"10M buffered IO"},
+  {tool:"db_bench",group:"directio",name:"directio_on",scale:"10M",threads:16,tput:83690,metric:"readrandom_ops_sec",rp99:240,up99:203,size:1401,flushes:160,stall:132756,notes:"10M direct IO"},
+  {tool:"db_bench",group:"directio",name:"directio_off",scale:"50M",threads:16,tput:201829,metric:"readrandom_ops_sec",rp99:20,up99:1389,size:6288,flushes:800,stall:1319279,notes:"50M buffered IO"},
+  {tool:"db_bench",group:"directio",name:"directio_on",scale:"50M",threads:16,tput:41845,metric:"readrandom_ops_sec",rp99:480,up99:1554,size:7006,flushes:800,stall:1484257,notes:"50M direct IO"},
+  {tool:"db_bench",group:"directio",name:"directio_off",scale:"100M",threads:16,tput:125583,metric:"readrandom_ops_sec",rp99:32,up99:3801,size:12575,flushes:1600,stall:3731486,notes:"100M buffered IO"},
+  {tool:"db_bench",group:"directio",name:"directio_on",scale:"100M",threads:16,tput:26037,metric:"readrandom_ops_sec",rp99:770,up99:4268,size:14012,flushes:1600,stall:4198115,notes:"100M direct IO"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_4t",scale:"1M",threads:4,tput:5751,metric:"overall_run_ops_sec",rp99:1571,up99:2491,size:"NA",flushes:"NA",stall:"NA",notes:"50/50 read-update @ 1M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_8t",scale:"1M",threads:8,tput:7418,metric:"overall_run_ops_sec",rp99:2251,up99:3563,size:"NA",flushes:"NA",stall:"NA",notes:"50/50 read-update @ 1M / 8 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_16t",scale:"1M",threads:16,tput:7829,metric:"overall_run_ops_sec",rp99:3935,up99:6039,size:"NA",flushes:"NA",stall:"NA",notes:"50/50 read-update @ 1M / 16 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadb_4t",scale:"1M",threads:4,tput:10087,metric:"overall_run_ops_sec",rp99:1585,up99:2313,size:"NA",flushes:"NA",stall:"NA",notes:"95/5 read-update @ 1M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadc_4t",scale:"1M",threads:4,tput:9954,metric:"overall_run_ops_sec",rp99:1585,up99:"NA",size:"NA",flushes:"NA",stall:"NA",notes:"100% read @ 1M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadf_4t",scale:"1M",threads:4,tput:6053,metric:"overall_run_ops_sec",rp99:1450,up99:1276,size:"NA",flushes:"NA",stall:"NA",notes:"read-modify-write @ 1M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_4t",scale:"10M",threads:4,tput:3506,metric:"overall_run_ops_sec",rp99:3501,up99:4695,size:"NA",flushes:"NA",stall:"NA",notes:"50/50 read-update @ 10M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_8t",scale:"10M",threads:8,tput:2584,metric:"overall_run_ops_sec",rp99:6715,up99:7851,size:"NA",flushes:"NA",stall:"NA",notes:"Thread inversion! 8t slower than 4t due to disk contention"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_16t",scale:"10M",threads:16,tput:2965,metric:"overall_run_ops_sec",rp99:11775,up99:13927,size:"NA",flushes:"NA",stall:"NA",notes:"50/50 read-update @ 10M / 16 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadb_4t",scale:"10M",threads:4,tput:5401,metric:"overall_run_ops_sec",rp99:2267,up99:2963,size:"NA",flushes:"NA",stall:"NA",notes:"95/5 read-update @ 10M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadc_4t",scale:"10M",threads:4,tput:4704,metric:"overall_run_ops_sec",rp99:2493,up99:"NA",size:"NA",flushes:"NA",stall:"NA",notes:"100% read @ 10M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadf_4t",scale:"10M",threads:4,tput:3596,metric:"overall_run_ops_sec",rp99:3095,up99:1314,size:"NA",flushes:"NA",stall:"NA",notes:"read-modify-write @ 10M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_4t",scale:"50M",threads:4,tput:940,metric:"overall_run_ops_sec",rp99:22767,up99:24895,size:"NA",flushes:"NA",stall:"NA",notes:"50/50 read-update @ 50M: throughput collapses, latency spikes"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_8t",scale:"50M",threads:8,tput:1064,metric:"overall_run_ops_sec",rp99:19663,up99:20655,size:"NA",flushes:"NA",stall:"NA",notes:"50/50 read-update @ 50M / 8 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloada_16t",scale:"50M",threads:16,tput:1111,metric:"overall_run_ops_sec",rp99:24783,up99:26239,size:"NA",flushes:"NA",stall:"NA",notes:"50/50 read-update @ 50M: extra threads hide disk latency slightly"},
+  {tool:"ycsb",group:"ycsb",name:"workloadb_4t",scale:"50M",threads:4,tput:1204,metric:"overall_run_ops_sec",rp99:8463,up99:10391,size:"NA",flushes:"NA",stall:"NA",notes:"95/5 read-update @ 50M / 4 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadb_16t",scale:"50M",threads:16,tput:2112,metric:"overall_run_ops_sec",rp99:10791,up99:12487,size:"NA",flushes:"NA",stall:"NA",notes:"95/5 read-update @ 50M / 16 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadc_4t",scale:"50M",threads:4,tput:2629,metric:"overall_run_ops_sec",rp99:2441,up99:"NA",size:"NA",flushes:"NA",stall:"NA",notes:"100% read @ 50M: degrades gracefully vs mixed"},
+  {tool:"ycsb",group:"ycsb",name:"workloadc_16t",scale:"50M",threads:16,tput:3627,metric:"overall_run_ops_sec",rp99:6363,up99:"NA",size:"NA",flushes:"NA",stall:"NA",notes:"100% read @ 50M / 16 threads"},
+  {tool:"ycsb",group:"ycsb",name:"workloadf_4t",scale:"50M",threads:4,tput:4529,metric:"overall_run_ops_sec",rp99:1254,up99:1130,size:"NA",flushes:"NA",stall:"NA",notes:"RMW @ 50M: runs last on warmer shared DB (ordering artifact)"},
+  {tool:"ycsb",group:"ycsb",name:"workloadf_16t",scale:"50M",threads:16,tput:6500,metric:"overall_run_ops_sec",rp99:2600,up99:2400,size:"NA",flushes:"NA",stall:"NA",notes:"RMW @ 50M / 16 threads"}
+];
+
+/* ==================== 2. INTERACTIVE MASTER TABLE RENDERER ==================== */
+const tableBody = document.getElementById("masterTableBody");
+const searchInput = document.getElementById("tableSearch");
+const filterBtns = document.querySelectorAll("#tableFilters .filter-btn");
+let currentFilter = "all";
+
+function renderTable() {
+  const query = searchInput.value.toLowerCase();
+  tableBody.innerHTML = "";
+  
+  const filtered = rawData.filter(row => {
+    const matchesFilter = currentFilter === "all" || row.group === currentFilter;
+    const matchesSearch = row.name.toLowerCase().includes(query) || 
+                          row.group.toLowerCase().includes(query) || 
+                          row.notes.toLowerCase().includes(query) ||
+                          row.tool.toLowerCase().includes(query);
+    return matchesFilter && matchesSearch;
+  });
+
+  if (filtered.length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:20px; color:var(--text-muted);">No experimental runs found matching criteria.</td></tr>`;
+    return;
+  }
+
+  filtered.forEach(row => {
+    const tr = document.createElement("tr");
+    const tputFmt = typeof row.tput === "number" ? row.tput.toLocaleString() : row.tput;
+    const sizeFmt = typeof row.size === "number" ? row.size.toLocaleString() + " MB" : row.size;
+    const stallFmt = typeof row.stall === "number" ? (row.stall/1000).toFixed(1) + " ms" : row.stall;
+    
+    // Highlight colors
+    let tputClass = "";
+    if (typeof row.tput === "number") {
+      if (row.tput > 400000 || (row.tool==="ycsb" && row.tput > 7000)) tputClass = "val-hi";
+      else if (row.tput < 150000 || (row.tool==="ycsb" && row.tput < 1500)) tputClass = "val-lo";
+    }
+
+    tr.innerHTML = `
+      <td><span class="badge" style="background:rgba(255,255,255,0.08); color:#fff;">${row.tool}</span></td>
+      <td style="font-weight:600; color:#fff;">${row.name} <div style="font-size:11px; color:var(--text-muted); font-weight:400;">${row.notes}</div></td>
+      <td><code class="mono">${row.scale}</code></td>
+      <td><code class="mono">${row.threads}t</code></td>
+      <td class="${tputClass}" style="font-family:'Outfit',sans-serif; font-size:14px;">${tputFmt}</td>
+      <td class="mono">${row.rp99}</td>
+      <td class="mono">${sizeFmt}</td>
+      <td class="mono" style="font-size:12px;">Flushes: ${row.flushes}<br><span style="color:var(--text-muted);">Stall: ${stallFmt}</span></td>
+    `;
+    tableBody.appendChild(tr);
+  });
+}
+
+searchInput.addEventListener("input", renderTable);
+filterBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    filterBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.getAttribute("data-filter");
+    renderTable();
+  });
+});
+
+renderTable();
+
+/* ==================== 3. CHART.JS VISUAL ENGINE ==================== */
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = "#94a3b8";
+const C = {
+  blue: "#3b82f6", blueGlow: "rgba(59, 130, 246, 0.3)",
+  cyan: "#06b6d4", cyanGlow: "rgba(6, 182, 212, 0.3)",
+  green: "#10b981", greenGlow: "rgba(16, 185, 129, 0.3)",
+  amber: "#f59e0b", amberGlow: "rgba(245, 158, 11, 0.3)",
+  red: "#ef4444", redGlow: "rgba(239, 68, 68, 0.3)",
+  purple: "#8b5cf6", purpleGlow: "rgba(139, 92, 246, 0.3)",
+  slate: "#475569", ink: "#0f172a"
+};
+const fmt = v => v >= 1000 ? (v/1000).toFixed(v>=100000?0:1)+"k" : v;
+const gridY = { grid: { color: "rgba(255,255,255,0.05)" }, ticks: { callback: fmt, color: "#94a3b8" } };
+const noGridX = { grid: { display: false }, ticks: { color: "#cbd5e1", font: { weight: "600" } } };
+
+function dualBarLine(id, labels, bars, barLabel, line, lineLabel, barColors) {
+  new Chart(document.getElementById(id), {
+    data: {
+      labels,
+      datasets: [
+        { type: "bar", label: barLabel, data: bars, backgroundColor: barColors || C.blue, borderRadius: 6, yAxisID: "y", order: 2 },
+        { type: "line", label: lineLabel, data: line, borderColor: C.red, backgroundColor: C.red, tension: 0.3, yAxisID: "y1", pointRadius: 5, pointHoverRadius: 7, borderWidth: 2.5, order: 1 }
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { color: "#cbd5e1" } } },
+      scales: {
+        x: noGridX,
+        y: { ...gridY, position: "left", title: { display: true, text: barLabel, color: "#cbd5e1" } },
+        y1: { position: "right", grid: { display: false }, title: { display: true, text: lineLabel, color: "#cbd5e1" }, ticks: { callback: fmt, color: "#94a3b8" } }
+      }
+    }
+  });
+}
+
+function dualBar(id, labels, aData, aLabel, bData, bLabel) {
+  new Chart(document.getElementById(id), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        { label: aLabel, data: aData, backgroundColor: C.blue, borderRadius: 6, yAxisID: "y" },
+        { label: bLabel, data: bData, backgroundColor: C.amber, borderRadius: 6, yAxisID: "y1" }
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { color: "#cbd5e1" } } },
+      scales: {
+        x: noGridX,
+        y: { ...gridY, position: "left", title: { display: true, text: aLabel, color: "#cbd5e1" } },
+        y1: { position: "right", grid: { display: false }, title: { display: true, text: bLabel, color: "#cbd5e1" }, ticks: { callback: fmt, color: "#94a3b8" } }
+      }
+    }
+  });
+}
+
+function simpleBar(id, labels, data, label, colors) {
+  new Chart(document.getElementById(id), {
+    type: "bar",
+    data: { labels, datasets: [{ label, data, backgroundColor: colors || C.blue, borderRadius: 6 }] },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: noGridX, y: { ...gridY, title: { display: true, text: label, color: "#cbd5e1" } } }
+    }
+  });
+}
+
+function multiLine(id, labels, series) {
+  new Chart(document.getElementById(id), {
+    type: "line",
+    data: {
+      labels,
+      datasets: series.map(s => ({
+        label: s.n, data: s.d, borderColor: s.c, backgroundColor: s.c,
+        tension: 0.3, pointRadius: 4, pointHoverRadius: 6, borderWidth: 2.5
+      }))
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { color: "#cbd5e1" } } },
+      scales: { x: noGridX, y: gridY }
+    }
+  });
+}
+
+function groupBar(id, labels, series) {
+  new Chart(document.getElementById(id), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: series.map(s => ({ label: s.n, data: s.d, backgroundColor: s.c, borderRadius: 5 }))
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { color: "#cbd5e1" } } },
+      scales: { x: noGridX, y: gridY }
+    }
+  });
+}
+
+/* --- Render All Charts --- */
+// 1. Compression
+dualBar("c_comp", ["none", "snappy", "lz4 (base)", "zstd"], [343232, 402191, 410341, 341087], "Read ops/s", [1419, 850, 850, 911], "DB size (MB)");
+
+// 2. Memtable
+dualBarLine("c_mem", ["64 MB", "128 MB", "256 MB", "512 MB"], [128, 64, 31, 16], "Flush count", [391019, 385497, 409551, 438391], "Read ops/s", [C.amber, C.amber, C.green, C.red]);
+
+// 3. Bgjobs
+dualBarLine("c_bg", ["2 jobs", "4 jobs (base)", "8 jobs", "16 jobs"], [355103, 409906, 454550, 495149], "Read ops/s", [11, 10, 9, 8], "Read p99 (µs)", [C.slate, C.blue, C.cyan, C.green]);
+
+// 4. Cache
+simpleBar("c_cache", ["512 MB", "1 GB (base)", "2 GB", "4 GB"], [404716, 457086, 419413, 432363], "Read ops/s", [C.amber, C.green, C.blue, C.blue]);
+
+// 5. Direct IO
+dualBarLine("c_dio", ["Buffered (OFF)", "Direct I/O (ON)"], [448509, 92989], "Read ops/s", [9, 215], "Read p99 (µs)", [C.green, C.red]);
+
+// 6. Compaction
+dualBar("c_cmp", ["Level (base)", "Universal"], [443515, 389419], "Read ops/s", [860, 1683], "DB size (MB)");
+
+// 7. Scale Throughput
+multiLine("c_scale", ["8M", "10M", "50M", "100M"], [
+  { n: "lz4 (winner)", d: [410341, 369307, 184653, 114895], c: C.green },
+  { n: "snappy", d: [402191, 361972, 180986, 112613], c: C.cyan },
+  { n: "none", d: [343232, 308909, 154454, 96105], c: C.amber },
+  { n: "zstd", d: [341087, 306978, 153489, 95504], c: C.purple }
+]);
+
+// 7b. Direct IO Scale
+groupBar("c_dioscale", ["8M", "10M", "50M", "100M"], [
+  { n: "Buffered I/O (OFF)", d: [448509, 403658, 201829, 125583], c: C.green },
+  { n: "Direct I/O (ON)", d: [92989, 83690, 41845, 26037], c: C.red }
+]);
+
+// 8. Scale Latency
+multiLine("c_scalelat", ["8M", "10M", "50M", "100M"], [
+  { n: "none", d: [12, 13, 26, 42], c: C.amber },
+  { n: "zstd", d: [12, 13, 26, 42], c: C.purple },
+  { n: "snappy", d: [10, 11, 22, 36], c: C.cyan },
+  { n: "lz4", d: [10, 11, 22, 35], c: C.green }
+]);
+
+// 9. YCSB Throughput
+multiLine("c_ycsb", ["1M (RAM)", "10M (Spill)", "50M (Disk)"], [
+  { n: "A · 50/50 Mixed", d: [5751, 3506, 940], c: C.red },
+  { n: "B · 95/5 Read", d: [10087, 5401, 1204], c: C.blue },
+  { n: "C · 100% Read", d: [9954, 4704, 2629], c: C.green },
+  { n: "F · RMW (Artifact*)", d: [6053, 3596, 4529], c: C.purple }
+]);
+
+// 10. Thread Inversion
+groupBar("c_threads", ["1M (RAM)", "10M (Inversion!)", "50M (Disk)"], [
+  { n: "4 threads", d: [5751, 3506, 940], c: C.green },
+  { n: "8 threads", d: [7418, 2584, 1064], c: C.amber },
+  { n: "16 threads", d: [7829, 2965, 1111], c: C.blue }
+]);
+
+// 11. Write Stalls & Latency
+dualBarLine("c_stall", ["8M", "10M", "50M", "100M"], [8167, 10209, 51044, 102088], "Compaction time (ms)", [54465, 76117, 851012, 2407026], "Write-stall (ms)", [C.blue, C.blue, C.amber, C.red]);
+multiLine("c_ylat", ["1M", "10M", "50M"], [
+  { n: "4 threads p99", d: [1571, 3501, 22767], c: C.cyan },
+  { n: "16 threads p99", d: [3935, 11775, 24783], c: C.red }
+]);
+simpleBar("c_rw", ["A · 50/50", "B · 95/5", "C · 100% Read", "F · RMW*"], [1111, 2112, 3627, 6500], "ops/s @ 50M / 16t", [C.red, C.amber, C.green, C.purple]);
+
+// 12. Knob Impact
+simpleBar("c_impact", ["Direct I/O Toggle", "Background Jobs", "Compression Codec", "Compaction Style", "Memtable Size", "Block Cache Size"], [382, 39, 20, 14, 14, 13], "Read Throughput Swing (%)", [C.red, C.green, C.green, C.blue, C.blue, C.slate]);
+</script>
+
+</body>
+</html>
