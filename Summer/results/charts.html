@@ -1270,55 +1270,415 @@ new Chart(document.getElementById("c_ycsb_lat"), {
   }
 });
 
-/* ========== 22. HEATMAP (simulated with stacked bars) ========== */
+/* ========== 22. TRUE HEATMAP GRID (Raw Canvas) ========== */
+(() => {
+  const canvas = document.getElementById("c_heatgrid");
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+
+  const rows = [
+    { lbl: "lz4 ⭐",      vals: [410341, 369307, 184653, 114895] },
+    { lbl: "snappy",       vals: [402191, 361972, 180986, 112613] },
+    { lbl: "zstd",         vals: [341087, 306978, 153489,  95504] },
+    { lbl: "none",         vals: [343232, 308909, 154454,  96105] },
+    { lbl: "BgJobs=16 ⭐", vals: [495149, 445634, 222817, 138642] },
+    { lbl: "BgJobs=8",     vals: [454550, 409095, 204548, 127274] },
+    { lbl: "BgJobs=4",     vals: [409906, 368915, 184458, 114774] },
+    { lbl: "BgJobs=2",     vals: [355103, 319593, 159796,  99429] },
+    { lbl: "Mem=512",      vals: [438391, 394552, 197276, 122749] },
+    { lbl: "Mem=256 ⭐",   vals: [409551, 368596, 184298, 114674] },
+    { lbl: "Mem=128",      vals: [385497, 346947, 173474, 107939] },
+    { lbl: "Mem=64",       vals: [391019, 351917, 175959, 109485] },
+    { lbl: "Cache=1G ⭐",  vals: [457086, 411377, 205689, 127984] },
+    { lbl: "Cache=512M",   vals: [404716, 364244, 182122, 113320] },
+    { lbl: "Buffered ⭐",  vals: [448509, 403658, 201829, 125583] },
+    { lbl: "Direct IO ❌", vals: [ 92989,  83690,  41845,  26037] },
+    { lbl: "Level ⭐",     vals: [443515, 399164, 199582, 124184] },
+    { lbl: "Universal",    vals: [389419, 350477, 175239, 109037] },
+  ];
+  const cols = ["8M", "10M", "50M", "100M"];
+
+  const labelW = 130, cellW = 130, cellH = 32, headerH = 36, padTop = 10;
+  const totalW = labelW + cols.length * cellW + 20;
+  const totalH = padTop + headerH + rows.length * cellH + 20;
+
+  canvas.width = totalW * dpr;
+  canvas.height = totalH * dpr;
+  canvas.style.width = totalW + "px";
+  canvas.style.height = totalH + "px";
+  ctx.scale(dpr, dpr);
+
+  // Color interpolation
+  const minV = 26037, maxV = 495149;
+  function heatColor(v) {
+    const t = Math.max(0, Math.min(1, (v - minV) / (maxV - minV)));
+    // red (0) -> amber (0.3) -> cyan (0.6) -> green (1)
+    let r, g, b;
+    if (t < 0.33) {
+      const s = t / 0.33;
+      r = 239 + (245-239)*s; g = 68 + (158-68)*s; b = 68 + (11-68)*s;
+    } else if (t < 0.66) {
+      const s = (t-0.33) / 0.33;
+      r = 245 + (6-245)*s; g = 158 + (182-158)*s; b = 11 + (212-11)*s;
+    } else {
+      const s = (t-0.66) / 0.34;
+      r = 6 + (16-6)*s; g = 182 + (185-182)*s; b = 212 + (129-212)*s;
+    }
+    return `rgb(${Math.round(r)},${Math.round(g)},${Math.round(b)})`;
+  }
+  function textColor(v) {
+    const t = (v - minV) / (maxV - minV);
+    return t > 0.5 ? "#0a0f1a" : "#f1f5f9";
+  }
+
+  // Draw column headers
+  ctx.font = "bold 12px 'JetBrains Mono', monospace";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  cols.forEach((c, i) => {
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText(c, labelW + i * cellW + cellW/2, padTop + headerH/2);
+  });
+
+  // Draw rows
+  rows.forEach((row, ri) => {
+    const y = padTop + headerH + ri * cellH;
+    // Row label
+    ctx.textAlign = "right";
+    ctx.font = "600 11px 'Inter', sans-serif";
+    ctx.fillStyle = row.lbl.includes("❌") ? "#f43f5e" : row.lbl.includes("⭐") ? "#34d399" : "#cbd5e1";
+    ctx.fillText(row.lbl, labelW - 10, y + cellH/2);
+
+    // Cells
+    row.vals.forEach((v, ci) => {
+      const x = labelW + ci * cellW;
+      const color = heatColor(v);
+      // Cell background
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(x + 2, y + 2, cellW - 4, cellH - 4, 6);
+      ctx.fill();
+      // Cell value
+      ctx.fillStyle = textColor(v);
+      ctx.textAlign = "center";
+      ctx.font = "600 11px 'JetBrains Mono', monospace";
+      ctx.fillText(fmt(v), x + cellW/2, y + cellH/2);
+    });
+  });
+
+  // Color legend bar
+  const legY = padTop + headerH + rows.length * cellH + 6;
+  const legW = cols.length * cellW;
+  for (let i = 0; i < legW; i++) {
+    const v = minV + (maxV - minV) * (i / legW);
+    ctx.fillStyle = heatColor(v);
+    ctx.fillRect(labelW + i, legY, 1, 10);
+  }
+  ctx.font = "500 10px 'Inter', sans-serif";
+  ctx.fillStyle = "#94a3b8";
+  ctx.textAlign = "left";
+  ctx.fillText(fmt(minV) + " ops/s", labelW, legY + 20);
+  ctx.textAlign = "right";
+  ctx.fillText(fmt(maxV) + " ops/s", labelW + legW, legY + 20);
+  ctx.textAlign = "center";
+  ctx.fillText("▲ Throughput Color Scale", labelW + legW/2, legY + 20);
+})();
+
+/* ========== 23. RADAR — COMPRESSION MULTI-AXIS ========== */
+new Chart(document.getElementById("c_radar_comp"), {
+  type: "radar",
+  data: {
+    labels: ["Throughput", "DB Compactness", "Low Latency (p99)", "Low Compaction Time", "Low Stall Time"],
+    datasets: [
+      { label: "lz4 ⭐", data: [100, 100, 100, 63, 75], borderColor: P.green, backgroundColor: alpha(P.green, 0.15), borderWidth: 2.5, pointRadius: 4 },
+      { label: "snappy", data: [87, 100, 100, 100, 48], borderColor: P.cyan, backgroundColor: alpha(P.cyan, 0.1), borderWidth: 2, pointRadius: 4 },
+      { label: "none", data: [3, 0, 0, 0, 83], borderColor: P.amber, backgroundColor: alpha(P.amber, 0.08), borderWidth: 2, pointRadius: 4 },
+      { label: "zstd", data: [0, 89, 0, 60, 0], borderColor: P.purple, backgroundColor: alpha(P.purple, 0.08), borderWidth: 2, pointRadius: 4 },
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend },
+    scales: {
+      r: {
+        grid: { color: "rgba(255,255,255,0.06)" },
+        angleLines: { color: "rgba(255,255,255,0.08)" },
+        pointLabels: { color: "#cbd5e1", font: { size: 11, weight: "600" } },
+        ticks: { display: false },
+        suggestedMin: 0, suggestedMax: 100,
+      }
+    }
+  }
+});
+
+/* ========== 24. RADAR — BEST vs WORST CONFIG ========== */
+new Chart(document.getElementById("c_radar_best"), {
+  type: "radar",
+  data: {
+    labels: ["Compression", "Memtable", "Bg Jobs", "Block Cache", "I/O Mode", "Compaction"],
+    datasets: [
+      { label: "Best Config", data: [100, 85, 100, 100, 100, 100],
+        borderColor: P.green, backgroundColor: alpha(P.green, 0.2), borderWidth: 3, pointRadius: 5 },
+      { label: "Worst Config", data: [0, 30, 0, 40, 0, 20],
+        borderColor: P.red, backgroundColor: alpha(P.red, 0.1), borderWidth: 2.5, pointRadius: 5, borderDash: [5,3] },
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend },
+    scales: {
+      r: {
+        grid: { color: "rgba(255,255,255,0.06)" },
+        angleLines: { color: "rgba(255,255,255,0.08)" },
+        pointLabels: { color: "#cbd5e1", font: { size: 11, weight: "600" } },
+        ticks: { display: false },
+        suggestedMin: 0, suggestedMax: 100,
+      }
+    }
+  }
+});
+
+/* ========== 25. BUBBLE CHART ========== */
 (() => {
   const data = [
-    // rows: knob settings; cols: 8M, 10M, 50M, 100M
-    { lbl: "lz4",       vals: [410341, 369307, 184653, 114895] },
-    { lbl: "snappy",    vals: [402191, 361972, 180986, 112613] },
-    { lbl: "zstd",      vals: [341087, 306978, 153489,  95504] },
-    { lbl: "none",      vals: [343232, 308909, 154454,  96105] },
-    { lbl: "BgJobs=16", vals: [495149, 445634, 222817, 138642] },
-    { lbl: "BgJobs=8",  vals: [454550, 409095, 204548, 127274] },
-    { lbl: "BgJobs=4",  vals: [409906, 368915, 184458, 114774] },
-    { lbl: "BgJobs=2",  vals: [355103, 319593, 159796,  99429] },
-    { lbl: "Mem=512",   vals: [438391, 394552, 197276, 122749] },
-    { lbl: "Mem=256",   vals: [409551, 368596, 184298, 114674] },
-    { lbl: "Mem=64",    vals: [391019, 351917, 175959, 109485] },
-    { lbl: "Buffered",  vals: [448509, 403658, 201829, 125583] },
-    { lbl: "DirectIO",  vals: [ 92989,  83690,  41845,  26037] },
+    // {x: p99, y: throughput, r: stall_normalized, label, color}
+    // compression 8M
+    {x:12,y:343232,r:8,c:P.amber,l:"none 8M"},{x:10,y:402191,r:10,c:P.cyan,l:"snappy 8M"},
+    {x:10,y:410341,r:8,c:P.green,l:"lz4 8M"},{x:12,y:341087,r:11,c:P.purple,l:"zstd 8M"},
+    // bgjobs 8M
+    {x:11,y:355103,r:10,c:P.teal,l:"2jobs 8M"},{x:10,y:409906,r:13,c:P.teal,l:"4jobs 8M"},
+    {x:9,y:454550,r:12,c:P.teal,l:"8jobs 8M"},{x:8,y:495149,r:11,c:P.teal,l:"16jobs 8M"},
+    // directio 8M
+    {x:9,y:448509,r:12,c:P.sky,l:"Buffered 8M"},{x:215,y:92989,r:14,c:P.red,l:"DirectIO 8M"},
+    // compression 50M
+    {x:26,y:154454,r:18,c:P.amber,l:"none 50M"},{x:22,y:180986,r:22,c:P.cyan,l:"snappy 50M"},
+    {x:22,y:184653,r:17,c:P.green,l:"lz4 50M"},{x:26,y:153489,r:23,c:P.purple,l:"zstd 50M"},
+    // directio 50M
+    {x:20,y:201829,r:20,c:P.sky,l:"Buffered 50M"},{x:480,y:41845,r:24,c:P.red,l:"DirectIO 50M"},
+    // compression 100M
+    {x:42,y:96105,r:26,c:P.amber,l:"none 100M"},{x:35,y:114895,r:24,c:P.green,l:"lz4 100M"},
+    {x:42,y:95504,r:28,c:P.purple,l:"zstd 100M"},
+    // directio 100M
+    {x:32,y:125583,r:28,c:P.sky,l:"Buffered 100M"},{x:770,y:26037,r:32,c:P.red,l:"DirectIO 100M"},
   ];
 
-  const scaleLabels = ["8M", "10M", "50M", "100M"];
-  const maxVal = 500000;
-  const hue = (v) => {
-    const ratio = Math.min(v / maxVal, 1);
-    if (ratio > 0.7) return P.green;
-    if (ratio > 0.5) return P.cyan;
-    if (ratio > 0.3) return P.amber;
-    if (ratio > 0.15) return P.orange;
-    return P.red;
-  };
-
-  const datasets = scaleLabels.map((s, i) => ({
-    label: s,
-    data: data.map(d => d.vals[i]),
-    backgroundColor: data.map(d => alpha(hue(d.vals[i]), 0.75)),
-    borderColor: data.map(d => hue(d.vals[i])),
-    borderWidth: 1,
-    borderRadius: 4,
-  }));
-
-  new Chart(document.getElementById("c_heatmap"), {
-    type: "bar",
-    data: { labels: data.map(d => d.lbl), datasets },
+  new Chart(document.getElementById("c_bubble"), {
+    type: "bubble",
+    data: {
+      datasets: [{
+        label: "Experiments",
+        data: data.map(d => ({x: d.x, y: d.y, r: d.r})),
+        backgroundColor: data.map(d => alpha(d.c, 0.5)),
+        borderColor: data.map(d => d.c),
+        borderWidth: 1.5,
+        hoverRadius: 3,
+      }]
+    },
     options: {
-      indexAxis: "y",
       maintainAspectRatio: false,
-      plugins: { legend },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const d = data[ctx.dataIndex];
+              return `${d.l}: ${fmt(d.y)} ops/s, p99=${d.x}µs`;
+            }
+          }
+        }
+      },
       scales: {
-        x: { ...yAxis, stacked: false, title: { display: true, text: "Read ops/s", color: "#cbd5e1" } },
-        y: { ...xAxis, stacked: false, ticks: { font: { size: 11, weight: "600" } } }
+        x: { ...yAxis, type: "logarithmic", title: { display: true, text: "Read p99 Latency (µs) — log", color: "#cbd5e1" } },
+        y: { ...yAxis, title: { display: true, text: "Read Throughput (ops/s)", color: "#cbd5e1" } }
+      }
+    }
+  });
+})();
+
+/* ========== 26. POLAR AREA ========== */
+new Chart(document.getElementById("c_polar"), {
+  type: "polarArea",
+  data: {
+    labels: ["Direct I/O (382%)", "Bg Jobs (39%)", "Compression (20%)", "Compaction (14%)", "Memtable (14%)", "Cache (13%)"],
+    datasets: [{
+      data: [382, 39, 20, 14, 14, 13],
+      backgroundColor: [alpha(P.red,0.7), alpha(P.green,0.7), alpha(P.cyan,0.7), alpha(P.blue,0.7), alpha(P.purple,0.7), alpha(P.slate,0.7)],
+      borderColor: [P.red, P.green, P.cyan, P.blue, P.purple, P.slate],
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { ...legend, position: "right" },
+    },
+    scales: {
+      r: {
+        grid: { color: "rgba(255,255,255,0.06)" },
+        ticks: { display: false },
+      }
+    }
+  }
+});
+
+/* ========== 27. DOUGHNUT ========== */
+new Chart(document.getElementById("c_doughnut"), {
+  type: "doughnut",
+  data: {
+    labels: ["Level (860 MB)", "Universal (1,683 MB)", "FIFO (38 MB — 96% data loss!)"],
+    datasets: [{
+      data: [860, 1683, 38],
+      backgroundColor: [alpha(P.green,0.8), alpha(P.amber,0.8), alpha(P.red,0.6)],
+      borderColor: [P.green, P.amber, P.red],
+      borderWidth: 2,
+      hoverOffset: 12,
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    cutout: "55%",
+    plugins: {
+      legend: { ...legend, position: "bottom" },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.label}: ${ctx.raw} MB`
+        }
+      }
+    }
+  }
+});
+
+/* ========== 28. WATERFALL ========== */
+(() => {
+  // Simulated waterfall: starting from worst config (DirectIO ON, 2 bg jobs) ~93k
+  // Each step adds the incremental gain from fixing that knob
+  const steps = [
+    { label: "Worst Config\n(DirectIO ON)", base: 0, gain: 92989, color: P.slate },
+    { label: "Fix Direct I/O\n→ Buffered", base: 92989, gain: 355520, color: P.red },
+    { label: "Fix Bg Jobs\n2 → 16", base: 92989+355520, gain: 46640, color: P.green },
+    { label: "Fix Compression\n→ lz4", base: 92989+355520+46640, gain: 5435, color: P.cyan },
+    { label: "Fix Cache\n→ 1GB", base: 92989+355520+46640+5435, gain: 4000, color: P.blue },
+    { label: "Fix Memtable\n→ 256MB", base: 92989+355520+46640+5435+4000, gain: 0, color: P.purple },
+  ];
+
+  // Floating bar chart: each bar starts at `base` and extends to `base + gain`
+  new Chart(document.getElementById("c_waterfall"), {
+    type: "bar",
+    data: {
+      labels: steps.map(s => s.label),
+      datasets: [
+        {
+          label: "Running Total",
+          data: steps.map(s => [s.base, s.base + s.gain]),
+          backgroundColor: steps.map(s => alpha(s.color, 0.75)),
+          borderColor: steps.map(s => s.color),
+          borderWidth: 2,
+          borderRadius: 6,
+          borderSkipped: false,
+        }
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const s = steps[ctx.dataIndex];
+              return s.gain > 0 ? `+${fmt(s.gain)} ops/s (total: ${fmt(s.base + s.gain)})` : `Base: ${fmt(s.base)} ops/s`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { ...xAxis, ticks: { font: { size: 10 }, maxRotation: 0 } },
+        y: { ...yAxis, title: { display: true, text: "Cumulative Read ops/s", color: "#cbd5e1" } }
+      }
+    }
+  });
+})();
+
+/* ========== 29. YCSB WORKLOAD RADAR ========== */
+new Chart(document.getElementById("c_radar_ycsb"), {
+  type: "radar",
+  data: {
+    labels: ["1M Throughput", "10M Throughput", "50M Throughput", "Low p99 @ 1M", "Low p99 @ 50M"],
+    datasets: [
+      { label: "A · 50/50", data: [57, 35, 9, 85, 8], borderColor: P.red, backgroundColor: alpha(P.red, 0.12), borderWidth: 2.5, pointRadius: 4 },
+      { label: "B · 95/5", data: [100, 54, 12, 84, 30], borderColor: P.blue, backgroundColor: alpha(P.blue, 0.1), borderWidth: 2, pointRadius: 4 },
+      { label: "C · 100% Read", data: [99, 47, 26, 84, 85], borderColor: P.green, backgroundColor: alpha(P.green, 0.12), borderWidth: 2.5, pointRadius: 4 },
+      { label: "F · RMW", data: [60, 36, 45, 90, 100], borderColor: P.purple, backgroundColor: alpha(P.purple, 0.08), borderWidth: 2, pointRadius: 4, borderDash: [5,3] },
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend },
+    scales: {
+      r: {
+        grid: { color: "rgba(255,255,255,0.06)" },
+        angleLines: { color: "rgba(255,255,255,0.08)" },
+        pointLabels: { color: "#cbd5e1", font: { size: 10, weight: "600" } },
+        ticks: { display: false },
+        suggestedMin: 0, suggestedMax: 100,
+      }
+    }
+  }
+});
+
+/* ========== 30. STACKED AREA ========== */
+new Chart(document.getElementById("c_stacked_area"), {
+  type: "line",
+  data: {
+    labels: ["8M", "10M", "50M", "100M"],
+    datasets: [
+      { label: "Compaction Time (s)", data: [8.167, 10.209, 51.044, 102.088],
+        borderColor: P.blue, backgroundColor: alpha(P.blue, 0.3), fill: "origin",
+        tension: 0.35, pointRadius: 5, borderWidth: 2.5, order: 2 },
+      { label: "Write Stall Time (s)", data: [0.054, 0.076, 0.851, 2.407],
+        borderColor: P.rose, backgroundColor: alpha(P.rose, 0.4), fill: "origin",
+        tension: 0.35, pointRadius: 5, borderWidth: 2.5, order: 1 },
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend },
+    scales: {
+      x: xAxis,
+      y: { ...yAxis, title: { display: true, text: "Time (seconds)", color: "#cbd5e1" } }
+    }
+  }
+});
+
+/* ========== 31. NORMALIZED % DECAY ========== */
+(() => {
+  function norm(arr) { return arr.map(v => Math.round(v / arr[0] * 100)); }
+
+  new Chart(document.getElementById("c_decay_pct"), {
+    type: "line",
+    data: {
+      labels: ["8M", "10M", "50M", "100M"],
+      datasets: [
+        { label: "lz4", data: norm([410341, 369307, 184653, 114895]), borderColor: P.green, tension: 0.3, pointRadius: 5, borderWidth: 2.5 },
+        { label: "BgJobs=16", data: norm([495149, 445634, 222817, 138642]), borderColor: P.cyan, tension: 0.3, pointRadius: 5, borderWidth: 2.5 },
+        { label: "Buffered IO", data: norm([448509, 403658, 201829, 125583]), borderColor: P.sky, tension: 0.3, pointRadius: 5, borderWidth: 2 },
+        { label: "Level Compaction", data: norm([443515, 399164, 199582, 124184]), borderColor: P.purple, tension: 0.3, pointRadius: 5, borderWidth: 2 },
+        { label: "Direct IO ❌", data: norm([92989, 83690, 41845, 26037]), borderColor: P.red, tension: 0.3, pointRadius: 5, borderWidth: 2, borderDash: [6,3] },
+        { label: "BgJobs=2", data: norm([355103, 319593, 159796, 99429]), borderColor: P.slate, tension: 0.3, pointRadius: 5, borderWidth: 2, borderDash: [4,4] },
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend,
+        tooltip: {
+          callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}% of 8M baseline` }
+        }
+      },
+      scales: {
+        x: xAxis,
+        y: { ...yAxis, title: { display: true, text: "% of 8M Baseline Throughput", color: "#cbd5e1" },
+          ticks: { callback: v => v + "%" } }
       }
     }
   });
@@ -1335,3 +1695,4 @@ document.querySelectorAll('.nav-pill').forEach(pill => {
 
 </body>
 </html>
+
